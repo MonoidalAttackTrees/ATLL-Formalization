@@ -386,6 +386,38 @@ pentagon {U , X , α} {V , Y , β} {W , Z , γ} {R , S , φ} = (ext-set aux₁) 
      aux₈ {(u , v) , w} with t₂ u
      ... | r₁ , r₂ = refl
 
+smc-triangle : {A B : Obj} → ⊗-α {A}{I}{B} ○ (id {A} ⊗ₐ ⊗-λ {B}) ≡h (⊗-ρ {A} ⊗ₐ id {B})
+smc-triangle {U , X , α} {V , Y , β} = (ext-set aux₁) , ext-set aux₂
+  where
+    aux₁ : {a : (U × ⊤) × V} → (⟨ id-set , snd ⟩ ∘ lr-assoc-×) a ≡ ⟨ fst {B = ⊤ {lzero}} , id-set ⟩ a
+    aux₁ {( u , triv) , v} = refl
+
+    aux₂ : {a : _×_ {lzero} {lzero} (V → X) (U → Y)} →
+           _≡_ {lzero}
+           {_×_ {lzero} {lzero}
+           (V → _×_ {lzero} {lzero} (⊤ {lzero} → X) (U → ⊤ {lzero}))
+           (_×_ {lzero} {lzero} U (⊤ {lzero}) → Y)}
+           (_∘_ {lzero} {lzero} {lzero} {_×_ {lzero} {lzero} (V → X) (U → Y)}
+           {_×_ {lzero} {lzero} (_×_ {lzero} {lzero} (⊤ {lzero}) V → X)
+           (U → _×_ {lzero} {lzero} (V → ⊤ {lzero}) (⊤ {lzero} → Y))}
+           {_×_ {lzero} {lzero}
+           (V → _×_ {lzero} {lzero} (⊤ {lzero} → X) (U → ⊤ {lzero}))
+           (_×_ {lzero} {lzero} U (⊤ {lzero}) → Y)}
+           (Fα {⊤ {lzero}} {V} {X} {⊤ {lzero}} {U} {⊤ {lzero}} {Y})
+           (F⊗ {V} {X} {U} {Y} {_×_ {lzero} {lzero} (⊤ {lzero}) V} {X} {U}
+           {_×_ {lzero} {lzero} (V → ⊤ {lzero}) (⊤ {lzero} → Y)}
+           {id-set {lzero} {U}} {id-set {lzero} {X}}
+           {snd {lzero} {lzero} {⊤ {lzero}} {V}}
+           {λ x → (λ _ → triv) , (λ _ → x)})
+           a)
+           (F⊗ {V} {X} {U} {Y} {V}
+           {_×_ {lzero} {lzero} (⊤ {lzero} → X) (U → ⊤ {lzero})}
+           {_×_ {lzero} {lzero} U (⊤ {lzero})} {Y}
+           {fst {lzero} {lzero} {U} {⊤ {lzero}}}
+           {λ x → (λ x₁ → x) , (λ x₁ → triv)} {id-set {lzero} {V}}
+           {id-set {lzero} {Y}} a)
+    aux₂ {r₁ , r₂} = eq-× refl refl
+
 -- Internal hom:
 ⊸-cond : ∀{U V X Y : Set} → (U → X → Four) → (V → Y → Four) → (U → V) × (Y → X) → U × Y → Four
 ⊸-cond α β (f , g) (u , y) = α u (g y) ⊸₄ β (f u) y
