@@ -278,6 +278,114 @@ Fα (f ,  g) = (λ x → (λ x₁ → f ((x₁ , x))) , (λ x₁ → fst (g x₁
 -- TODO:
 --   SMC diagrams
 
+pentagon : {A B C D : Obj} → (⊗-α {A}{B}{C} ⊗ₐ id {D}) ○ ⊗-α {A}{B ⊗ C}{D} ○ (id {A} ⊗ₐ ⊗-α {B}{C}{D}) ≡h ⊗-α {A ⊗ B}{C}{D} ○ ⊗-α {A}{B}{C ⊗ D}
+pentagon {U , X , α} {V , Y , β} {W , Z , γ} {R , S , φ} = (ext-set aux₁) , ext-set aux₂
+ where
+   aux₁ : {a : ((U × V) × W) × R} → (⟨ id-set , lr-assoc-× ⟩ ∘ (lr-assoc-× ∘ ⟨ lr-assoc-× , id-set ⟩)) a ≡ (lr-assoc-× ∘ lr-assoc-×) a
+   aux₁ {((u , v) , w) , r} = refl
+
+   aux₂ : {a : (V × W × R → X) × (U → (W × R → Y) × (V → (R → Z) × (W → S)))}
+     → ((F⊗ {f = lr-assoc-× {lzero} {lzero} {lzero} {U} {V} {W}}
+            {Fα {V} {W} {X} {Y} {U} {V} {Z}}
+            {id-set {lzero} {R}}{id-set {lzero} {S}}
+         ∘
+         Fα {V × W}{R}{X}{(W → Y) × (V → Z)}{U}{V × W}{S})
+         ∘
+         F⊗ {f = id-set {lzero} {U}}
+            {id-set {lzero} {X}}
+            {lr-assoc-× {lzero} {lzero} {lzero} {V} {W} {R}}
+            {Fα {W} {R} {Y} {Z} {V} {W} {S}}) a
+         ≡
+         (Fα {W} {R} {(V → X) × (U → Y)} {Z}
+             {U × V} {W} {S}
+          ∘
+          Fα {V} {W × R} {X}
+             {Y} {U} {V} {(R → Z) × (W → S)}) a
+   aux₂ {t₁ , t₂} = eq-× (ext-set aux₃) (ext-set (λ {a} → aux₈ {a}))
+    where
+     aux₃ : {a : R} →
+       _≡_ {lzero}
+       {Σ {lzero} {lzero} (W → Σ {lzero} {lzero} (V → X) (λ x → U → Y))
+         (λ x → Σ {lzero} {lzero} U (λ x₁ → V) → Z)}
+       ((λ x →
+           (λ x₁ → id-set {lzero} {X} (t₁ (x₁ , x , id-set {lzero} {R} a))) ,
+           (λ x₁ →
+              fst {lzero} {lzero} {W → Y} {V → Z}
+              (fst {lzero} {lzero} {R → _×_ {lzero} {lzero} (W → Y) (V → Z)}
+                {_×_ {lzero} {lzero} V W → S}
+                (Fα {W} {R} {Y} {Z} {V} {W} {S} (t₂ (id-set {lzero} {U} x₁)))
+                (id-set {lzero} {R} a))
+              x))
+           ,
+           (λ x →
+           snd {lzero} {lzero} {W → Y} {V → Z}
+           (fst {lzero} {lzero} {R → _×_ {lzero} {lzero} (W → Y) (V → Z)}
+             {_×_ {lzero} {lzero} V W → S}
+             (Fα {W} {R} {Y} {Z} {V} {W} {S}
+             (t₂ (id-set {lzero} {U} (fst {lzero} {lzero} {U} {V} x))))
+             (id-set {lzero} {R} a))
+           (snd {lzero} {lzero} {U} {V} x)))
+       ((λ x₁ →
+           (λ x₂ → t₁ (x₂ , x₁ , a)) ,
+           (λ x₂ →
+              fst {lzero} {lzero} {_×_ {lzero} {lzero} W R → Y}
+              {V → _×_ {lzero} {lzero} (R → Z) (W → S)} (t₂ x₂) (x₁ , a)))
+           ,
+           (λ x₁ →
+           fst {lzero} {lzero} {R → Z} {W → S}
+           (snd {lzero} {lzero} {_×_ {lzero} {lzero} W R → Y}
+             {V → _×_ {lzero} {lzero} (R → Z) (W → S)}
+             (t₂ (fst {lzero} {lzero} {U} {V} x₁))
+             (snd {lzero} {lzero} {U} {V} x₁))
+           a))
+     aux₃ {x} = eq-× (ext-set aux₄) (ext-set (λ {a} → aux₇ {a}))
+      where
+       aux₄ : {a : W} →
+         _≡_ {lzero} {Σ {lzero} {lzero} (V → X) (λ x₁ → U → Y)}
+         ((λ x₁ → id-set {lzero} {X} (t₁ (x₁ , a , id-set {lzero} {R} x))) ,
+           (λ x₁ →
+             fst {lzero} {lzero} {W → Y} {V → Z}
+             (fst {lzero} {lzero} {R → _×_ {lzero} {lzero} (W → Y) (V → Z)}
+               {_×_ {lzero} {lzero} V W → S}
+               (Fα {W} {R} {Y} {Z} {V} {W} {S} (t₂ (id-set {lzero} {U} x₁)))
+               (id-set {lzero} {R} x))
+             a))
+         ((λ x₂ → t₁ (x₂ , a , x)) ,
+           (λ x₂ →
+             fst {lzero} {lzero} {_×_ {lzero} {lzero} W R → Y}
+             {V → _×_ {lzero} {lzero} (R → Z) (W → S)} (t₂ x₂) (a , x)))
+       aux₄ {w} = eq-× (ext-set aux₅) (ext-set aux₆) 
+        where
+         aux₅ : {a : V} → id-set (t₁ (a , w , id-set x)) ≡ t₁ (a , w , x)
+         aux₅ {v} = refl
+
+         aux₆ : {a : U} → fst (fst (Fα {W} {R} {Y} {Z} {V} {W} {S} (t₂ (id-set a))) (id-set x)) w ≡ fst (t₂ a) (w , x)
+         aux₆ {u} with t₂ u
+         aux₆ {a} | r₁ , r₂ = refl
+         
+       aux₇ : {a : Σ {lzero} {lzero} U (λ x₁ → V)} →
+         _≡_ {lzero} {Z}
+         (snd {lzero} {lzero} {W → Y} {V → Z}
+           (fst {lzero} {lzero} {R → _×_ {lzero} {lzero} (W → Y) (V → Z)}
+           {_×_ {lzero} {lzero} V W → S}
+           (Fα {W} {R} {Y} {Z} {V} {W} {S}
+             (t₂ (id-set {lzero} {U} (fst {lzero} {lzero} {U} {V} a))))
+           (id-set {lzero} {R} x))
+           (snd {lzero} {lzero} {U} {V} a))
+         (fst {lzero} {lzero} {R → Z} {W → S}
+           (snd {lzero} {lzero} {_×_ {lzero} {lzero} W R → Y}
+           {V → _×_ {lzero} {lzero} (R → Z) (W → S)}
+           (t₂ (fst {lzero} {lzero} {U} {V} a))
+           (snd {lzero} {lzero} {U} {V} a))
+           x)
+       aux₇ {u , v} with t₂ u
+       aux₇ {u , v} | r₁ , r₂ = refl
+       
+     aux₈ : {a : (U × V) × W} → id-set (snd (Fα {W} {R} {Y} {Z} {V} {W} {S} (t₂ (id-set (fst (lr-assoc-× a)))))
+                                       (snd (lr-assoc-× a))) ≡ snd (snd (t₂ (fst (fst a))) (snd (fst a))) (snd a)
+     aux₈ {(u , v) , w} with t₂ u
+     ... | r₁ , r₂ = refl
+
 -- Internal hom:
 ⊸-cond : ∀{U V X Y : Set} → (U → X → Four) → (V → Y → Four) → (U → V) × (Y → X) → U × Y → Four
 ⊸-cond α β (f , g) (u , y) = α u (g y) ⊸₄ β (f u) y
