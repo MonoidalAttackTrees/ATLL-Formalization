@@ -21,3 +21,5 @@ The Formalization of the Semantics of the Attack Tree Linear Logic
       - [Contraction implies false](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L608)
       - [The left zero theorem](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L612) and [the right zero theorem](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L618)
       - [Associtivity](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L624) and [Functorality](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L690)      
+    - Theorems about Choice
+      - 

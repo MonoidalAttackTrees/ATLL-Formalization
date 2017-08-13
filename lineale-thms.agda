@@ -1077,6 +1077,348 @@ iso₄-inv {two} {two} p = triv , triv
 ▷₄-distr {two} {two} {one} = refl
 ▷₄-distr {two} {two} {two} = refl
 
+⊔₄-sym : ∀{a b} → (a ⊔₄ b) ≡ (b ⊔₄ a)
+⊔₄-sym {zero} {zero} = refl
+⊔₄-sym {zero} {half} = refl
+⊔₄-sym {zero} {one} = refl
+⊔₄-sym {zero} {two} = refl
+⊔₄-sym {half} {zero} = refl
+⊔₄-sym {half} {half} = refl
+⊔₄-sym {half} {one} = refl
+⊔₄-sym {half} {two} = refl
+⊔₄-sym {one} {zero} = refl
+⊔₄-sym {one} {half} = refl
+⊔₄-sym {one} {one} = refl
+⊔₄-sym {one} {two} = refl
+⊔₄-sym {two} {zero} = refl
+⊔₄-sym {two} {half} = refl
+⊔₄-sym {two} {one} = refl
+⊔₄-sym {two} {two} = refl
+
+⊔₄-assoc : ∀{a b c} → (a ⊔₄ b) ⊔₄ c ≡ a ⊔₄ (b ⊔₄ c)
+⊔₄-assoc {zero} {zero} {zero} = refl
+⊔₄-assoc {zero} {zero} {half} = refl
+⊔₄-assoc {zero} {zero} {one} = refl
+⊔₄-assoc {zero} {zero} {two} = refl
+⊔₄-assoc {zero} {half} {zero} = refl
+⊔₄-assoc {zero} {half} {half} = refl
+⊔₄-assoc {zero} {half} {one} = refl
+⊔₄-assoc {zero} {half} {two} = refl
+⊔₄-assoc {zero} {one} {zero} = refl
+⊔₄-assoc {zero} {one} {half} = refl
+⊔₄-assoc {zero} {one} {one} = refl
+⊔₄-assoc {zero} {one} {two} = refl
+⊔₄-assoc {zero} {two} {zero} = refl
+⊔₄-assoc {zero} {two} {half} = refl
+⊔₄-assoc {zero} {two} {one} = refl
+⊔₄-assoc {zero} {two} {two} = refl
+⊔₄-assoc {half} {zero} {zero} = refl
+⊔₄-assoc {half} {zero} {half} = refl
+⊔₄-assoc {half} {zero} {one} = refl
+⊔₄-assoc {half} {zero} {two} = refl
+⊔₄-assoc {half} {half} {zero} = refl
+⊔₄-assoc {half} {half} {half} = refl
+⊔₄-assoc {half} {half} {one} = refl
+⊔₄-assoc {half} {half} {two} = refl
+⊔₄-assoc {half} {one} {zero} = refl
+⊔₄-assoc {half} {one} {half} = refl
+⊔₄-assoc {half} {one} {one} = refl
+⊔₄-assoc {half} {one} {two} = refl
+⊔₄-assoc {half} {two} {zero} = refl
+⊔₄-assoc {half} {two} {half} = refl
+⊔₄-assoc {half} {two} {one} = refl
+⊔₄-assoc {half} {two} {two} = refl
+⊔₄-assoc {one} {zero} {zero} = refl
+⊔₄-assoc {one} {zero} {half} = refl
+⊔₄-assoc {one} {zero} {one} = refl
+⊔₄-assoc {one} {zero} {two} = refl
+⊔₄-assoc {one} {half} {zero} = refl
+⊔₄-assoc {one} {half} {half} = refl
+⊔₄-assoc {one} {half} {one} = refl
+⊔₄-assoc {one} {half} {two} = refl
+⊔₄-assoc {one} {one} {zero} = refl
+⊔₄-assoc {one} {one} {half} = refl
+⊔₄-assoc {one} {one} {one} = refl
+⊔₄-assoc {one} {one} {two} = refl
+⊔₄-assoc {one} {two} {zero} = refl
+⊔₄-assoc {one} {two} {half} = refl
+⊔₄-assoc {one} {two} {one} = refl
+⊔₄-assoc {one} {two} {two} = refl
+⊔₄-assoc {two} {zero} {zero} = refl
+⊔₄-assoc {two} {zero} {half} = refl
+⊔₄-assoc {two} {zero} {one} = refl
+⊔₄-assoc {two} {zero} {two} = refl
+⊔₄-assoc {two} {half} {zero} = refl
+⊔₄-assoc {two} {half} {half} = refl
+⊔₄-assoc {two} {half} {one} = refl
+⊔₄-assoc {two} {half} {two} = refl
+⊔₄-assoc {two} {one} {zero} = refl
+⊔₄-assoc {two} {one} {half} = refl
+⊔₄-assoc {two} {one} {one} = refl
+⊔₄-assoc {two} {one} {two} = refl
+⊔₄-assoc {two} {two} {zero} = refl
+⊔₄-assoc {two} {two} {half} = refl
+⊔₄-assoc {two} {two} {one} = refl
+⊔₄-assoc {two} {two} {two} = refl
+
+⊔₄-func : ∀{a c b d} → a ≤₄ c → b ≤₄ d → (a ⊔₄ b) ≤₄ (c ⊔₄ d)
+⊔₄-func {zero} {zero} {zero} {zero} triv triv = triv
+⊔₄-func {zero} {zero} {zero} {half} triv triv = triv
+⊔₄-func {zero} {zero} {zero} {one} triv triv = triv
+⊔₄-func {zero} {zero} {zero} {two} triv triv = triv
+⊔₄-func {zero} {zero} {half} {zero} triv ()
+⊔₄-func {zero} {zero} {half} {half} triv triv = triv
+⊔₄-func {zero} {zero} {half} {one} triv triv = triv
+⊔₄-func {zero} {zero} {half} {two} triv triv = triv
+⊔₄-func {zero} {zero} {one} {zero} triv ()
+⊔₄-func {zero} {zero} {one} {half} triv ()
+⊔₄-func {zero} {zero} {one} {one} triv triv = triv
+⊔₄-func {zero} {zero} {one} {two} triv triv = triv
+⊔₄-func {zero} {zero} {two} {zero} triv ()
+⊔₄-func {zero} {zero} {two} {half} triv ()
+⊔₄-func {zero} {zero} {two} {one} triv ()
+⊔₄-func {zero} {zero} {two} {two} triv triv = triv
+⊔₄-func {zero} {half} {zero} {zero} triv triv = triv
+⊔₄-func {zero} {half} {zero} {half} triv triv = triv
+⊔₄-func {zero} {half} {zero} {one} triv triv = triv
+⊔₄-func {zero} {half} {zero} {two} triv triv = triv
+⊔₄-func {zero} {half} {half} {zero} triv ()
+⊔₄-func {zero} {half} {half} {half} triv triv = triv
+⊔₄-func {zero} {half} {half} {one} triv triv = triv
+⊔₄-func {zero} {half} {half} {two} triv triv = triv
+⊔₄-func {zero} {half} {one} {zero} triv ()
+⊔₄-func {zero} {half} {one} {half} triv ()
+⊔₄-func {zero} {half} {one} {one} triv triv = triv
+⊔₄-func {zero} {half} {one} {two} triv triv = triv
+⊔₄-func {zero} {half} {two} {zero} triv ()
+⊔₄-func {zero} {half} {two} {half} triv ()
+⊔₄-func {zero} {half} {two} {one} triv ()
+⊔₄-func {zero} {half} {two} {two} triv triv = triv
+⊔₄-func {zero} {one} {zero} {zero} triv triv = triv
+⊔₄-func {zero} {one} {zero} {half} triv triv = triv
+⊔₄-func {zero} {one} {zero} {one} triv triv = triv
+⊔₄-func {zero} {one} {zero} {two} triv triv = triv
+⊔₄-func {zero} {one} {half} {zero} triv ()
+⊔₄-func {zero} {one} {half} {half} triv triv = triv
+⊔₄-func {zero} {one} {half} {one} triv triv = triv
+⊔₄-func {zero} {one} {half} {two} triv triv = triv
+⊔₄-func {zero} {one} {one} {zero} triv ()
+⊔₄-func {zero} {one} {one} {half} triv ()
+⊔₄-func {zero} {one} {one} {one} triv triv = triv
+⊔₄-func {zero} {one} {one} {two} triv triv = triv
+⊔₄-func {zero} {one} {two} {zero} triv ()
+⊔₄-func {zero} {one} {two} {half} triv ()
+⊔₄-func {zero} {one} {two} {one} triv ()
+⊔₄-func {zero} {one} {two} {two} triv triv = triv
+⊔₄-func {zero} {two} {zero} {zero} triv triv = triv
+⊔₄-func {zero} {two} {zero} {half} triv triv = triv
+⊔₄-func {zero} {two} {zero} {one} triv triv = triv
+⊔₄-func {zero} {two} {zero} {two} triv triv = triv
+⊔₄-func {zero} {two} {half} {zero} triv ()
+⊔₄-func {zero} {two} {half} {half} triv triv = triv
+⊔₄-func {zero} {two} {half} {one} triv triv = triv
+⊔₄-func {zero} {two} {half} {two} triv triv = triv
+⊔₄-func {zero} {two} {one} {zero} triv ()
+⊔₄-func {zero} {two} {one} {half} triv ()
+⊔₄-func {zero} {two} {one} {one} triv triv = triv
+⊔₄-func {zero} {two} {one} {two} triv triv = triv
+⊔₄-func {zero} {two} {two} {zero} triv ()
+⊔₄-func {zero} {two} {two} {half} triv ()
+⊔₄-func {zero} {two} {two} {one} triv ()
+⊔₄-func {zero} {two} {two} {two} triv triv = triv
+⊔₄-func {half} {zero} {zero} {zero} () p₂
+⊔₄-func {half} {zero} {zero} {half} () p₂
+⊔₄-func {half} {zero} {zero} {one} () p₂
+⊔₄-func {half} {zero} {zero} {two} () p₂
+⊔₄-func {half} {zero} {half} {zero} () p₂
+⊔₄-func {half} {zero} {half} {half} () p₂
+⊔₄-func {half} {zero} {half} {one} () p₂
+⊔₄-func {half} {zero} {half} {two} () p₂
+⊔₄-func {half} {zero} {one} {zero} () p₂
+⊔₄-func {half} {zero} {one} {half} () p₂
+⊔₄-func {half} {zero} {one} {one} () p₂
+⊔₄-func {half} {zero} {one} {two} () p₂
+⊔₄-func {half} {zero} {two} {zero} () p₂
+⊔₄-func {half} {zero} {two} {half} () p₂
+⊔₄-func {half} {zero} {two} {one} () p₂
+⊔₄-func {half} {zero} {two} {two} () p₂
+⊔₄-func {half} {half} {zero} {zero} triv triv = triv
+⊔₄-func {half} {half} {zero} {half} triv triv = triv
+⊔₄-func {half} {half} {zero} {one} triv triv = triv
+⊔₄-func {half} {half} {zero} {two} triv triv = triv
+⊔₄-func {half} {half} {half} {zero} triv ()
+⊔₄-func {half} {half} {half} {half} triv triv = triv
+⊔₄-func {half} {half} {half} {one} triv triv = triv
+⊔₄-func {half} {half} {half} {two} triv triv = triv
+⊔₄-func {half} {half} {one} {zero} triv ()
+⊔₄-func {half} {half} {one} {half} triv ()
+⊔₄-func {half} {half} {one} {one} triv triv = triv
+⊔₄-func {half} {half} {one} {two} triv triv = triv
+⊔₄-func {half} {half} {two} {zero} triv ()
+⊔₄-func {half} {half} {two} {half} triv ()
+⊔₄-func {half} {half} {two} {one} triv ()
+⊔₄-func {half} {half} {two} {two} triv triv = triv
+⊔₄-func {half} {one} {zero} {zero} triv triv = triv
+⊔₄-func {half} {one} {zero} {half} triv triv = triv
+⊔₄-func {half} {one} {zero} {one} triv triv = triv
+⊔₄-func {half} {one} {zero} {two} triv triv = triv
+⊔₄-func {half} {one} {half} {zero} triv ()
+⊔₄-func {half} {one} {half} {half} triv triv = triv
+⊔₄-func {half} {one} {half} {one} triv triv = triv
+⊔₄-func {half} {one} {half} {two} triv triv = triv
+⊔₄-func {half} {one} {one} {zero} triv ()
+⊔₄-func {half} {one} {one} {half} triv ()
+⊔₄-func {half} {one} {one} {one} triv triv = triv
+⊔₄-func {half} {one} {one} {two} triv triv = triv
+⊔₄-func {half} {one} {two} {zero} triv ()
+⊔₄-func {half} {one} {two} {half} triv ()
+⊔₄-func {half} {one} {two} {one} triv ()
+⊔₄-func {half} {one} {two} {two} triv triv = triv
+⊔₄-func {half} {two} {zero} {zero} triv triv = triv
+⊔₄-func {half} {two} {zero} {half} triv triv = triv
+⊔₄-func {half} {two} {zero} {one} triv triv = triv
+⊔₄-func {half} {two} {zero} {two} triv triv = triv
+⊔₄-func {half} {two} {half} {zero} triv ()
+⊔₄-func {half} {two} {half} {half} triv triv = triv
+⊔₄-func {half} {two} {half} {one} triv triv = triv
+⊔₄-func {half} {two} {half} {two} triv triv = triv
+⊔₄-func {half} {two} {one} {zero} triv ()
+⊔₄-func {half} {two} {one} {half} triv ()
+⊔₄-func {half} {two} {one} {one} triv triv = triv
+⊔₄-func {half} {two} {one} {two} triv triv = triv
+⊔₄-func {half} {two} {two} {zero} triv ()
+⊔₄-func {half} {two} {two} {half} triv ()
+⊔₄-func {half} {two} {two} {one} triv ()
+⊔₄-func {half} {two} {two} {two} triv triv = triv
+⊔₄-func {one} {zero} {zero} {zero} () p₂
+⊔₄-func {one} {zero} {zero} {half} () p₂
+⊔₄-func {one} {zero} {zero} {one} () p₂
+⊔₄-func {one} {zero} {zero} {two} () p₂
+⊔₄-func {one} {zero} {half} {zero} () p₂
+⊔₄-func {one} {zero} {half} {half} () p₂
+⊔₄-func {one} {zero} {half} {one} () p₂
+⊔₄-func {one} {zero} {half} {two} () p₂
+⊔₄-func {one} {zero} {one} {zero} () p₂
+⊔₄-func {one} {zero} {one} {half} () p₂
+⊔₄-func {one} {zero} {one} {one} () p₂
+⊔₄-func {one} {zero} {one} {two} () p₂
+⊔₄-func {one} {zero} {two} {zero} () p₂
+⊔₄-func {one} {zero} {two} {half} () p₂
+⊔₄-func {one} {zero} {two} {one} () p₂
+⊔₄-func {one} {zero} {two} {two} () p₂
+⊔₄-func {one} {half} {zero} {zero} () p₂
+⊔₄-func {one} {half} {zero} {half} () p₂
+⊔₄-func {one} {half} {zero} {one} () p₂
+⊔₄-func {one} {half} {zero} {two} () p₂
+⊔₄-func {one} {half} {half} {zero} () p₂
+⊔₄-func {one} {half} {half} {half} () p₂
+⊔₄-func {one} {half} {half} {one} () p₂
+⊔₄-func {one} {half} {half} {two} () p₂
+⊔₄-func {one} {half} {one} {zero} () p₂
+⊔₄-func {one} {half} {one} {half} () p₂
+⊔₄-func {one} {half} {one} {one} () p₂
+⊔₄-func {one} {half} {one} {two} () p₂
+⊔₄-func {one} {half} {two} {zero} () p₂
+⊔₄-func {one} {half} {two} {half} () p₂
+⊔₄-func {one} {half} {two} {one} () p₂
+⊔₄-func {one} {half} {two} {two} () p₂
+⊔₄-func {one} {one} {zero} {zero} triv triv = triv
+⊔₄-func {one} {one} {zero} {half} triv triv = triv
+⊔₄-func {one} {one} {zero} {one} triv triv = triv
+⊔₄-func {one} {one} {zero} {two} triv triv = triv
+⊔₄-func {one} {one} {half} {zero} triv ()
+⊔₄-func {one} {one} {half} {half} triv triv = triv
+⊔₄-func {one} {one} {half} {one} triv triv = triv
+⊔₄-func {one} {one} {half} {two} triv triv = triv
+⊔₄-func {one} {one} {one} {zero} triv ()
+⊔₄-func {one} {one} {one} {half} triv ()
+⊔₄-func {one} {one} {one} {one} triv triv = triv
+⊔₄-func {one} {one} {one} {two} triv triv = triv
+⊔₄-func {one} {one} {two} {zero} triv ()
+⊔₄-func {one} {one} {two} {half} triv ()
+⊔₄-func {one} {one} {two} {one} triv ()
+⊔₄-func {one} {one} {two} {two} triv triv = triv
+⊔₄-func {one} {two} {zero} {zero} triv triv = triv
+⊔₄-func {one} {two} {zero} {half} triv triv = triv
+⊔₄-func {one} {two} {zero} {one} triv triv = triv
+⊔₄-func {one} {two} {zero} {two} triv triv = triv
+⊔₄-func {one} {two} {half} {zero} triv ()
+⊔₄-func {one} {two} {half} {half} triv triv = triv
+⊔₄-func {one} {two} {half} {one} triv triv = triv
+⊔₄-func {one} {two} {half} {two} triv triv = triv
+⊔₄-func {one} {two} {one} {zero} triv ()
+⊔₄-func {one} {two} {one} {half} triv ()
+⊔₄-func {one} {two} {one} {one} triv triv = triv
+⊔₄-func {one} {two} {one} {two} triv triv = triv
+⊔₄-func {one} {two} {two} {zero} triv ()
+⊔₄-func {one} {two} {two} {half} triv ()
+⊔₄-func {one} {two} {two} {one} triv ()
+⊔₄-func {one} {two} {two} {two} triv triv = triv
+⊔₄-func {two} {zero} {zero} {zero} () p₂
+⊔₄-func {two} {zero} {zero} {half} () p₂
+⊔₄-func {two} {zero} {zero} {one} () p₂
+⊔₄-func {two} {zero} {zero} {two} () p₂
+⊔₄-func {two} {zero} {half} {zero} () p₂
+⊔₄-func {two} {zero} {half} {half} () p₂
+⊔₄-func {two} {zero} {half} {one} () p₂
+⊔₄-func {two} {zero} {half} {two} () p₂
+⊔₄-func {two} {zero} {one} {zero} () p₂
+⊔₄-func {two} {zero} {one} {half} () p₂
+⊔₄-func {two} {zero} {one} {one} () p₂
+⊔₄-func {two} {zero} {one} {two} () p₂
+⊔₄-func {two} {zero} {two} {zero} () p₂
+⊔₄-func {two} {zero} {two} {half} () p₂
+⊔₄-func {two} {zero} {two} {one} () p₂
+⊔₄-func {two} {zero} {two} {two} () p₂
+⊔₄-func {two} {half} {zero} {zero} () p₂
+⊔₄-func {two} {half} {zero} {half} () p₂
+⊔₄-func {two} {half} {zero} {one} () p₂
+⊔₄-func {two} {half} {zero} {two} () p₂
+⊔₄-func {two} {half} {half} {zero} () p₂
+⊔₄-func {two} {half} {half} {half} () p₂
+⊔₄-func {two} {half} {half} {one} () p₂
+⊔₄-func {two} {half} {half} {two} () p₂
+⊔₄-func {two} {half} {one} {zero} () p₂
+⊔₄-func {two} {half} {one} {half} () p₂
+⊔₄-func {two} {half} {one} {one} () p₂
+⊔₄-func {two} {half} {one} {two} () p₂
+⊔₄-func {two} {half} {two} {zero} () p₂
+⊔₄-func {two} {half} {two} {half} () p₂
+⊔₄-func {two} {half} {two} {one} () p₂
+⊔₄-func {two} {half} {two} {two} () p₂
+⊔₄-func {two} {one} {zero} {zero} () p₂
+⊔₄-func {two} {one} {zero} {half} () p₂
+⊔₄-func {two} {one} {zero} {one} () p₂
+⊔₄-func {two} {one} {zero} {two} () p₂
+⊔₄-func {two} {one} {half} {zero} () p₂
+⊔₄-func {two} {one} {half} {half} () p₂
+⊔₄-func {two} {one} {half} {one} () p₂
+⊔₄-func {two} {one} {half} {two} () p₂
+⊔₄-func {two} {one} {one} {zero} () p₂
+⊔₄-func {two} {one} {one} {half} () p₂
+⊔₄-func {two} {one} {one} {one} () p₂
+⊔₄-func {two} {one} {one} {two} () p₂
+⊔₄-func {two} {one} {two} {zero} () p₂
+⊔₄-func {two} {one} {two} {half} () p₂
+⊔₄-func {two} {one} {two} {one} () p₂
+⊔₄-func {two} {one} {two} {two} () p₂
+⊔₄-func {two} {two} {zero} {zero} triv triv = triv
+⊔₄-func {two} {two} {zero} {half} triv triv = triv
+⊔₄-func {two} {two} {zero} {one} triv triv = triv
+⊔₄-func {two} {two} {zero} {two} triv triv = triv
+⊔₄-func {two} {two} {half} {zero} triv ()
+⊔₄-func {two} {two} {half} {half} triv triv = triv
+⊔₄-func {two} {two} {half} {one} triv triv = triv
+⊔₄-func {two} {two} {half} {two} triv triv = triv
+⊔₄-func {two} {two} {one} {zero} triv ()
+⊔₄-func {two} {two} {one} {half} triv ()
+⊔₄-func {two} {two} {one} {one} triv triv = triv
+⊔₄-func {two} {two} {one} {two} triv triv = triv
+⊔₄-func {two} {two} {two} {zero} triv ()
+⊔₄-func {two} {two} {two} {half} triv ()
+⊔₄-func {two} {two} {two} {one} triv ()
+⊔₄-func {two} {two} {two} {two} triv triv = triv
+
 ⊗₄-func : ∀{a c b d} → a ≤₄ c → b ≤₄ d → (a ⊗₄ b) ≤₄ (c ⊗₄ d)
 ⊗₄-func {zero} {zero} {zero} {zero} p₁ p₂ = triv
 ⊗₄-func {zero} {zero} {zero} {half} p₁ p₂ = triv
