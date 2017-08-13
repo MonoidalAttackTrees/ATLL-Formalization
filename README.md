@@ -7,6 +7,7 @@ The Formalization of the Semantics of the Attack Tree Linear Logic
     - [Parallel Conjunction](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L65)
     - [Choice](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L53)
     - [Tensor Product](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L26)
+    - [Unit of the Tensor Product](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L38)
     - [Linear Implication](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L41)
     - [Preorder](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L17)
   - [Theorems about the Lineale Four](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda)
@@ -22,4 +23,12 @@ The Formalization of the Semantics of the Attack Tree Linear Logic
       - [The left zero theorem](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L612) and [the right zero theorem](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L618)
       - [Associtivity](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L624) and [Functorality](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L690)      
     - Theorems about Choice
-      - 
+      - [Associtivity](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1098), [Symmetry](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1080), and [Functorality](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1164)
+    - Theorems about the Tensor Product
+      - [Associtivity](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1713), [Symmetry](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1695), and [Functorality](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1695)
+      - The [left unitor](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1683) and the [right unitor](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1689)
+      - [Lineale Compatibility](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1680)
+    - Theorems about Linear Implications
+      - [Functorality](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1779)
+      - [Currying](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L2037) and [Uncurrying](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L2103)
+      
