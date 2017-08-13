@@ -1419,6 +1419,12 @@ iso₄-inv {two} {two} p = triv , triv
 ⊔₄-func {two} {two} {two} {one} triv ()
 ⊔₄-func {two} {two} {two} {two} triv triv = triv
 
+⊔₄-contract : ∀{a} → (a ⊔₄ a) ≡ a
+⊔₄-contract {zero} = refl
+⊔₄-contract {half} = refl
+⊔₄-contract {one} = refl
+⊔₄-contract {two} = refl
+
 ⊗₄-func : ∀{a c b d} → a ≤₄ c → b ≤₄ d → (a ⊗₄ b) ≤₄ (c ⊗₄ d)
 ⊗₄-func {zero} {zero} {zero} {zero} p₁ p₂ = triv
 ⊗₄-func {zero} {zero} {zero} {half} p₁ p₂ = triv
