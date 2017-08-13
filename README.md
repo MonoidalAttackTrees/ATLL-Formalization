@@ -1,3 +1,3 @@
-The Formalization of the Semantics for the Attack Tree Linear Logic
+The Formalization of the Semantics of the Attack Tree Linear Logic
 -------------------------------------------------------------------
 
