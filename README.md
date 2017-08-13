@@ -9,4 +9,5 @@ The Formalization of the Semantics of the Attack Tree Linear Logic
     - [Tensor Product](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L26)
     - [Linear Implication](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L41)
     - [Preorder](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale.agda#L17)
-  - 
+  - [Theorems about the Lineale Four](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda)
+    - 
