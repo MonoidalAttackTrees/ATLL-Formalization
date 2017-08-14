@@ -33,4 +33,5 @@ The Formalization of the Semantics of the Attack Tree Linear Logic
       - [Functorality](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1785)
       - [Currying](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L2042) and [Uncurrying](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L2109)
   - [Interpretation of Attack Trees](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/attack-tree.agda)
-      
+* Dialectica Space Semantics
+  - 
