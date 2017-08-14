@@ -32,4 +32,5 @@ The Formalization of the Semantics of the Attack Tree Linear Logic
     - Theorems about Linear Implications
       - [Functorality](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L1785)
       - [Currying](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L2042) and [Uncurrying](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L2109)
+    - [Interpretation of Attack Trees]()
       

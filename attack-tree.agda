@@ -34,19 +34,16 @@ OR-contract : ∀{𝔹}{t : ATree 𝔹}{α} → (⟦ OR t t ⟧ α) ≡ (⟦ t �
 OR-contract {𝔹}{t} = ⊔₄-contract
 
 SAND-assoc : ∀{𝔹}{t₁ t₂ t₄ : ATree 𝔹}{α} → (⟦ SAND (SAND t₁ t₂) t₄ ⟧ α) ≡ (⟦ SAND t₁ (SAND t₂ t₄) ⟧ α)
-SAND-assoc {𝔹}{t₁}{t₂}{t₄}{α} = sym (land-assoc {⟦ t₁ ⟧ α}{⟦ t₂ ⟧ α}{⟦ t₄ ⟧ α})
-
-SAND-contract : (∀{a} → (a ▷₄ a) ≡ a) → ⊥ {lzero}
-SAND-contract p = not-same-half-zero (p {zero})
+SAND-assoc {𝔹}{t₁}{t₂}{t₄}{α} = sym (▷₄-assoc {⟦ t₁ ⟧ α}{⟦ t₂ ⟧ α}{⟦ t₄ ⟧ α})
 
 AND-OR-dist₁ : ∀{𝔹}{t₁ t₂ t₄ : ATree 𝔹}{α} → (⟦ AND t₁ (OR t₂ t₄) ⟧ α) ≡ (⟦ OR (AND t₁ t₂) (AND t₁ t₄) ⟧ α)
-AND-OR-dist₁ {𝔹}{t₁}{t₂}{t₄}{α} = sym (para-over-lchoice {⟦ t₁ ⟧ α})
+AND-OR-dist₁ {𝔹}{t₁}{t₂}{t₄}{α} = ⊙₄-distl {⟦ t₁ ⟧ α}
 
 AND-OR-dist₂ : ∀{𝔹}{t₁ t₂ t₄ : ATree 𝔹}{α} → (⟦ AND (OR t₁ t₂) t₄ ⟧ α) ≡ (⟦ OR (AND t₁ t₄) (AND t₂ t₄) ⟧ α)
-AND-OR-dist₂ {𝔹}{t₁}{t₂}{t₄}{α} = sym (para-over-lchoice2 {⟦ t₁ ⟧ α})
+AND-OR-dist₂ {𝔹}{t₁}{t₂}{t₄}{α} = ⊙₄-distr {⟦ t₁ ⟧ α}
 
 SAND-OR-dist₁ : ∀{𝔹}{t₁ t₂ t₄ : ATree 𝔹}{α} → (⟦ SAND t₁ (OR t₂ t₄) ⟧ α) ≡ (⟦ OR (SAND t₁ t₂) (SAND t₁ t₄) ⟧ α)
-SAND-OR-dist₁ {𝔹}{t₁}{t₂}{t₄}{α} = sym (seq-over-lchoice {⟦ t₁ ⟧ α})
+SAND-OR-dist₁ {𝔹}{t₁}{t₂}{t₄}{α} = ▷₄-distl {⟦ t₁ ⟧ α}
 
 SAND-OR-dist₂ : ∀{𝔹}{t₁ t₂ t₄ : ATree 𝔹}{α} → (⟦ SAND (OR t₁ t₂) t₄ ⟧ α) ≡ (⟦ OR (SAND t₁ t₄) (SAND t₂ t₄) ⟧ α)
-SAND-OR-dist₂ {𝔹}{t₁}{t₂}{t₄}{α} = sym (seq-over-lchoice2 {⟦ t₄ ⟧ α}{⟦ t₁ ⟧ α})
+SAND-OR-dist₂ {𝔹}{t₁}{t₂}{t₄}{α} = ▷₄-distr {⟦ t₁ ⟧ α}{⟦ t₂ ⟧ α}{⟦ t₄ ⟧ α}
