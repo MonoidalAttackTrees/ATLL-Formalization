@@ -34,5 +34,5 @@ The Formalization of the Semantics of the Attack Tree Linear Logic
       - [Currying](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L2042) and [Uncurrying](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/lineale-thms.agda#L2109)
   - [Interpretation of Attack Trees](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/attack-tree.agda)
 * Dialectica Space Semantics
-  - [Dialectica Spaces form a category](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/dialectica-cat.agda) and it is a [symmetry monoidal closed category](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/dialectica-smcc.agda)
+  - [Dialectica Spaces form a category](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/dialectica-cat.agda) and it is a [symmetric monoidal closed category](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/dialectica-smcc.agda)
   - [Attack tree operators in dialectica spaces](https://github.com/MonoidalAttackTrees/ATLL-Formalization/blob/master/dialectica-at-ops.agda)
