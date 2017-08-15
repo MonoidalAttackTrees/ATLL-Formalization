@@ -146,7 +146,7 @@ _▷ₐ_ {U , X , α} {V , Y , β} {W , Z , γ} {M , T , φ} (f , F , p1) (g , G
 
 _⊔ᵣ_ : {U V X Y : Set} → (U → X → Four) → (V → Y → Four) → U ⊎ V → X ⊎ Y → Four
 _⊔ᵣ_ α β (inj₁ u) (inj₁ x) = α u x
-_⊔ᵣ_ α β (inj₁ u) (inj₂ y) = zero
+_⊔ᵣ_ α β (inj₁ u) (inj₂ y) = zero 
 _⊔ᵣ_ α β (inj₂ v) (inj₁ x) = zero
 _⊔ᵣ_ α β (inj₂ v) (inj₂ y) = β v y
 
@@ -471,4 +471,3 @@ _⊔ₐ_ {U , X , α} {V , Y , β} {W , Z , γ} {R , S , φ} (f , F , F-pf) (g ,
   aux₂ : {a : X' × Y' ⊎ X' × Z'} → (func-× F (⊎-map G H) ∘ ⊎-×-distl-inv) a ≡ (⊎-×-distl-inv ∘ ⊎-map (func-× F G) (func-× F H)) a
   aux₂ {inj₁ (x , y)} = refl
   aux₂ {inj₂ (x , z)} = refl
-
