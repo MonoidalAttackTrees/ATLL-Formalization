@@ -124,7 +124,7 @@ iso₄-inv {two} {two} p = triv , triv
 ⊙₄-zeror {two} = triv
 
 ⊙₄-contract : (∀{a} → (a ⊙₄ a) ≡ a) → ⊥ {lzero}
-⊙₄-contract p with p {two}
+⊙₄-contract p with p {half} 
 ... | () 
 
 ⊙₄-sym : ∀{a b} → a ⊙₄ b ≡ b ⊙₄ a

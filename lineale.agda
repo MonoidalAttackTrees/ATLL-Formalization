@@ -51,27 +51,24 @@ half ⊸₄ one = one
 _ ⊸₄ _ = two
 
 _⊔₄_ : Four → Four → Four
-half ⊔₄ half = half
-half ⊔₄ one = one
-one ⊔₄ half = one
-one ⊔₄ one = one
-two ⊔₄ two = two
-half ⊔₄ two = two
-two ⊔₄ half = two
-one ⊔₄ two = two
-two ⊔₄ one = two
-_ ⊔₄ _ = zero
+two ⊔₄ _ = two
+_ ⊔₄ two = two
+one ⊔₄ _ = one
+_ ⊔₄ one = one
+half ⊔₄ _ = half
+_ ⊔₄ half = half
+zero ⊔₄ zero = zero
 
 _⊙₄_ : Four → Four → Four
-half ⊙₄ half = half
-half ⊙₄ one = half
-one ⊙₄ half = half
-one ⊙₄ one = half
-half ⊙₄ two = half
-two ⊙₄ half = half
-one ⊙₄ two = half
-two ⊙₄ one = half
-two ⊙₄ two = half
+half ⊙₄ half = one
+half ⊙₄ one = one
+one ⊙₄ half = one
+one ⊙₄ one = one
+half ⊙₄ two = one
+two ⊙₄ half = one
+one ⊙₄ two = one
+two ⊙₄ one = one
+two ⊙₄ two = one
 _ ⊙₄ _ = zero
 
 _▷₄_ : Four → Four → Four
