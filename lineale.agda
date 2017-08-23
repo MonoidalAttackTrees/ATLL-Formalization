@@ -73,12 +73,12 @@ _ ⊙₄ _ = zero
 
 _▷₄_ : Four → Four → Four
 forth ▷₄ half = forth
-half ▷₄ forth = half
+half ▷₄ forth = one
 forth ▷₄ forth = forth
-half ▷₄ half = half
-one ▷₄ forth = half
 forth ▷₄ one = forth
-one ▷₄ half = half
-half ▷₄ one = half
-one ▷₄ one = half
+half ▷₄ half = one
+one ▷₄ forth = one
+one ▷₄ half = one
+half ▷₄ one = one
+one ▷₄ one = one
 _ ▷₄ _ = zero

@@ -606,7 +606,7 @@ iso₄-inv {one} {one} p = triv , triv
 ... | () 
 
 ▷₄-contract : (∀{a} → (a ▷₄ a) ≡ a) → ⊥ {lzero}
-▷₄-contract p with p {one}
+▷₄-contract p with p {half}
 ... | () 
 
 ▷₄-zerol : ∀{x} → (zero ▷₄ x) ≤₄ zero
@@ -2171,3 +2171,10 @@ curry₄-inv {one} {one} {zero} ()
 curry₄-inv {one} {one} {forth} ()
 curry₄-inv {one} {one} {half} ()
 curry₄-inv {one} {one} {one} p = triv
+
+relative-comp : ∀{a b} → ((a ⊸₄ b) ⊗₄ a) ≤₄ b
+relative-comp {a}{b} = curry₄-inv {a ⊸₄ b}{a}{b} (refl₄ {a ⊸₄ b})
+
+points : ∀{a b} → a ≤₄ b → I₄ ≤₄ (a ⊸₄ b)
+points {a}{b} p with fst (iso₄-inv (⊗₄-unitr {a}))
+... | r = curry₄ {I₄} {a} {b} (trans₄ {I₄ ⊗₄ a}{a}{b} r p)

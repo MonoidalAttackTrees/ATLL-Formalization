@@ -17,6 +17,7 @@ open import bool public
 open import bool-thms public
 open import sum public
 open import sum-thms public
+open import maybe public
 
 -- Extensionality will be used when proving equivalences of morphisms.
 postulate ext-set : ∀{l1 l2 : level} → extensionality {l1} {l2}
@@ -31,3 +32,10 @@ postulate ∧-assoc : ∀{ℓ}{A B C : Set ℓ} →  (A ∧ (B ∧ C)) ≡ ((A �
 -- The following defines a commutative monoid as lists:
 _* = 𝕃
 postulate *-comm : ∀{ℓ : Level}{A : Set ℓ}{l₁ l₂ : A *} → l₁ ++ l₂ ≡ l₂ ++ l₁
+
+record dec (𝔹 : Set) : Set₁ where
+  field
+    dec-pf : ∀{b₁ b₂ : 𝔹} → (b₁ ≡ b₂) ⊎ ((b₁ ≡ b₂) → ⊥ {lzero})
+
+open dec public
+
