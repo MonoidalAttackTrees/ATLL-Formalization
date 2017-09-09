@@ -219,29 +219,8 @@ W>0 {SAND A B} with W>0 {A} | W>0 {B}
 ... | r₁ | r₂ = aux₁ {W A}{W B} r₁ r₂
 W>0 {OR A B} = aux₂ {W A}
 
--- ⟿-decreasing : ∀{t₁ t₂} → t₁ ⟿ t₂ → W t₁ > W t₂ ≡ tt
--- ⟿-decreasing {AND A (OR B C)} {.(OR (AND _ _) (AND _ _))} ⟿-AND-distl = aux₃ {W A}{W B}{W C} 
--- ⟿-decreasing {SAND A (OR B C)} {.(OR (SAND _ _) (SAND _ _))} ⟿-SAND-distl = aux₃ {W A}{W B}{W C} 
--- ⟿-decreasing {AND A B} {AND C .B} (⟿-AND₁ d) with ⟿-decreasing d
--- ... | r = aux₄ {W A}{W B}{W C} r
--- ⟿-decreasing {AND A B} {AND (AND C D) E} (⟿-AND₂-assoc d) with ⟿-decreasing d
--- ... | r = aux₅ {W A} {W B} {W D} {W E} r
--- ⟿-decreasing {AND A B} {AND .A D} (⟿-AND₂ d x) with ⟿-decreasing d
--- ... | r = aux₆ {W A}{W B}{W D} r
--- ⟿-decreasing {SAND A B} {SAND C .B} (⟿-SAND₁ d) with ⟿-decreasing d
--- ... | r = aux₄ {W A}{W B}{W C} r
--- ⟿-decreasing {SAND A B} {SAND (SAND C D) E} (⟿-SAND₂-assoc d) with ⟿-decreasing d
--- ... | r = aux₅ {W A} {W B} {W D} {W E} r
--- ⟿-decreasing {SAND A B} {SAND .A D} (⟿-SAND₂ d x) with ⟿-decreasing d
--- ... | r = aux₆ {W A}{W B}{W D} r
--- ⟿-decreasing {OR A B} {OR C _} (⟿-OR₁ d) with ⟿-decreasing d
--- ... | r = aux₇ {W A} {W B} {W C} r
--- ⟿-decreasing {OR A B} {OR .A C} (⟿-OR₂-assoc-contract d) with ⟿-decreasing d
--- ... | r = aux₈ {W A} {W B} {W C} r
--- ⟿-decreasing {OR A B} {OR (OR C D) E} (⟿-OR₂-assoc d x) with ⟿-decreasing d
--- ... | r = aux₉ {W A} {W B} {W D} {W E} r
--- ⟿-decreasing {OR A B} {OR _ D} (⟿-OR₂ d x) with ⟿-decreasing d
--- ... | r = aux₁₀ {W A} {W D} {W B} r
+⟿-decreasing : ∀{t₁ t₂} → t₁ ⟿ t₂ → W t₁ > W t₂ ≡ tt
+⟿-decreasing {t₁}{t₂} p = {!!}
 
 -- --------------------------------------------------------------------------------------------
 -- --                                                                                        --
@@ -249,265 +228,143 @@ W>0 {OR A B} = aux₂ {W A}
 -- --                                                                                        --
 -- --------------------------------------------------------------------------------------------
 
--- ⟿*-AND₁ : ∀{A A' B} → A ⟿* A' → AND A B ⟿* AND A' B
--- ⟿*-AND₁ {A} {A'} {B} (⟿-step x) = ⟿-step (⟿-AND₁ x)
--- ⟿*-AND₁ {A} {.A} {B} ⟿-refl = ⟿-refl
--- ⟿*-AND₁ {A} {A'} {B} (⟿-trans {_}{B'}{_} p₁ p₂) = ⟿-trans (⟿*-AND₁ p₁) (⟿*-AND₁ p₂)
+isNorm : ATree → Set
+isNorm (NODE b) = ⊤
+isNorm (AND _ (AND _ _)) = ⊥
+isNorm (AND _ (OR _ _)) = ⊥
+isNorm (AND A B) = isNorm A × isNorm B
+isNorm (OR A B) with A ≅ B
+isNorm (OR _ _) | inj₁ _ = ⊥
+isNorm (OR _ (OR _ _)) | inj₂ _ = ⊥
+isNorm (OR A B) | inj₂ _ = isNorm A × isNorm B
+isNorm (SAND _ (OR _ _)) = ⊥
+isNorm (SAND _ (SAND _ _)) = ⊥
+isNorm (SAND A B) = isNorm A × isNorm B
 
--- ⟿*-SAND₁ : ∀{A A' B} → A ⟿* A' → SAND A B ⟿* SAND A' B
--- ⟿*-SAND₁ {A} {A'} {B} (⟿-step x) = ⟿-step (⟿-SAND₁ x)
--- ⟿*-SAND₁ {A} {.A} {B} ⟿-refl = ⟿-refl
--- ⟿*-SAND₁ {A} {A'} {B} (⟿-trans {_}{B'}{_} p₁ p₂) = ⟿-trans (⟿*-SAND₁ p₁) (⟿*-SAND₁ p₂)
-
--- ⟿*-OR₁ : ∀{A A' B} → A ⟿* A' → OR A B ⟿* OR A' B
--- ⟿*-OR₁ {A} {A'} {B} (⟿-step x) = ⟿-step (⟿-OR₁ x)
--- ⟿*-OR₁ {A} {.A} {B} ⟿-refl = ⟿-refl
--- ⟿*-OR₁ {A} {A'} {B} (⟿-trans {_}{B'}{_} p₁ p₂) = ⟿-trans (⟿*-OR₁ p₁) (⟿*-OR₁ p₂)
-
--- ⟿*-NODE-left : ∀{A b} → NODE b ⟿* A → A ≡ NODE b
--- ⟿*-NODE-left {A} {b} (⟿-step ())
--- ⟿*-NODE-left {.(NODE b)} {b} ⟿-refl = refl
--- ⟿*-NODE-left {A} {b} (⟿-trans d₁ d₂) rewrite ⟿*-NODE-left d₁ = ⟿*-NODE-left d₂
-
--- ⟿*-NODE : ∀{A b} → A ⟿* NODE b → A ≡ NODE b
--- ⟿*-NODE {A} {b} (⟿-step ())
--- ⟿*-NODE {.(NODE b)} {b} ⟿-refl = refl
--- ⟿*-NODE {A} {b} (⟿-trans {_}{B} p₁ p₂) rewrite ⟿*-NODE p₂ = ⟿*-NODE p₁
-
--- ⟿*-AND-node : ∀{A B b} → AND A B ⟿* NODE b → ⊥ {lzero}
--- ⟿*-AND-node {A} {B} {b} (⟿-step ())
--- ⟿*-AND-node {A} {B} {b} (⟿-trans {_}{B'}{_} p₁ p₂) rewrite ⟿*-NODE p₂ = ⟿*-AND-node p₁
-
--- ⟿*-AND₂ : ∀{A B B'} → B ⟿* B' → notAND B' → AND A B ⟿* AND A B'
--- ⟿*-AND₂ {A} {B} {B'} (⟿-step x) p = ⟿-step (⟿-AND₂ x p)
--- ⟿*-AND₂ {A} {B} {.B} ⟿-refl p = ⟿-refl
--- ⟿*-AND₂ {A} {B} {B'} (⟿-trans {_}{C} d₁ d₂) p with ⟿*-AND₂ {A} d₂ p
--- ... | r₁ = {!!}
-
--- ⟿-local-cf : ∀{A B C} → A ⟿ B → A ⟿ C → Σ[ D ∈ ATree ]( (B ⟿* D) × (C ⟿* D) )
--- ⟿-local-cf {AND A (OR B C)} {.(OR (AND _ _) (AND _ _))} {.(OR (AND _ _) (AND _ _))} ⟿-AND-distl ⟿-AND-distl = (OR (AND A B) (AND A C)) , (⟿-refl , ⟿-refl)
--- ⟿-local-cf {AND A (OR B C)} {OR (AND _ _) (AND _ _)} {AND A' (OR _ _)} ⟿-AND-distl (⟿-AND₁ d₂) = OR (AND A' B) (AND A' C) , {!⟿*-OR!} , {!!}
--- ⟿-local-cf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(AND (AND _ _) _)} ⟿-AND-distl (⟿-AND₂-assoc d₂) = {!!}
--- ⟿-local-cf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(AND _ _)} ⟿-AND-distl (⟿-AND₂ d₂ x) = {!!}
--- ⟿-local-cf {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} {.(OR (SAND _ _) (SAND _ _))} ⟿-SAND-distl ⟿-SAND-distl = {!!}
--- ⟿-local-cf {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} {.(SAND _ (OR _ _))} ⟿-SAND-distl (⟿-SAND₁ d₂) = {!!}
--- ⟿-local-cf {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} {.(SAND (SAND _ _) _)} ⟿-SAND-distl (⟿-SAND₂-assoc d₂) = {!!}
--- ⟿-local-cf {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} {.(SAND _ _)} ⟿-SAND-distl (⟿-SAND₂ d₂ x) = {!!}
--- ⟿-local-cf {.(AND _ (OR _ _))} {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} (⟿-AND₁ d₁) ⟿-AND-distl = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND _ _)} {.(AND _ _)} (⟿-AND₁ d₁) (⟿-AND₁ d₂) = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND _ _)} {.(AND (AND _ _) _)} (⟿-AND₁ d₁) (⟿-AND₂-assoc d₂) = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND _ _)} {.(AND _ _)} (⟿-AND₁ d₁) (⟿-AND₂ d₂ x) = {!!}
--- ⟿-local-cf {.(AND _ (OR _ _))} {.(AND (AND _ _) _)} {.(OR (AND _ _) (AND _ _))} (⟿-AND₂-assoc d₁) ⟿-AND-distl = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND (AND _ _) _)} {.(AND _ _)} (⟿-AND₂-assoc d₁) (⟿-AND₁ d₂) = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND (AND _ _) _)} {.(AND (AND _ _) _)} (⟿-AND₂-assoc d₁) (⟿-AND₂-assoc d₂) = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND (AND _ _) _)} {.(AND _ _)} (⟿-AND₂-assoc d₁) (⟿-AND₂ d₂ x) = {!!}
--- ⟿-local-cf {.(AND _ (OR _ _))} {.(AND _ _)} {.(OR (AND _ _) (AND _ _))} (⟿-AND₂ d₁ x) ⟿-AND-distl = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND _ _)} {.(AND _ _)} (⟿-AND₂ d₁ x) (⟿-AND₁ d₂) = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND _ _)} {.(AND (AND _ _) _)} (⟿-AND₂ d₁ x) (⟿-AND₂-assoc d₂) = {!!}
--- ⟿-local-cf {.(AND _ _)} {.(AND _ _)} {.(AND _ _)} (⟿-AND₂ d₁ x) (⟿-AND₂ d₂ x₁) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₁ d₁) (⟿-OR₁ d₂) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₁ d₁) (⟿-OR₂-assoc-contract d₂) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR (OR _ _) _)} (⟿-OR₁ d₁) (⟿-OR₂-assoc d₂ x) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₁ d₁) (⟿-OR₂ d₂ x) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₂-assoc-contract d₁) (⟿-OR₁ d₂) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₂-assoc-contract d₁) (⟿-OR₂-assoc-contract d₂) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR (OR _ _) _)} (⟿-OR₂-assoc-contract d₁) (⟿-OR₂-assoc d₂ x) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₂-assoc-contract d₁) (⟿-OR₂ d₂ x) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR (OR _ _) _)} {.(OR _ _)} (⟿-OR₂-assoc d₁ x) (⟿-OR₁ d₂) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR (OR _ _) _)} {.(OR _ _)} (⟿-OR₂-assoc d₁ x) (⟿-OR₂-assoc-contract d₂) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR (OR _ _) _)} {.(OR (OR _ _) _)} (⟿-OR₂-assoc d₁ x) (⟿-OR₂-assoc d₂ x₁) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR (OR _ _) _)} {.(OR _ _)} (⟿-OR₂-assoc d₁ x) (⟿-OR₂ d₂ x₁) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₂ d₁ x) (⟿-OR₁ d₂) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₂ d₁ x) (⟿-OR₂-assoc-contract d₂) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR (OR _ _) _)} (⟿-OR₂ d₁ x) (⟿-OR₂-assoc d₂ x₁) = {!!}
--- ⟿-local-cf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} (⟿-OR₂ d₁ x) (⟿-OR₂ d₂ x₁) = {!!}
--- ⟿-local-cf {.(SAND _ (OR _ _))} {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} (⟿-SAND₁ d₁) ⟿-SAND-distl = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND _ _)} {.(SAND _ _)} (⟿-SAND₁ d₁) (⟿-SAND₁ d₂) = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND _ _)} {.(SAND (SAND _ _) _)} (⟿-SAND₁ d₁) (⟿-SAND₂-assoc d₂) = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND _ _)} {.(SAND _ _)} (⟿-SAND₁ d₁) (⟿-SAND₂ d₂ x) = {!!}
--- ⟿-local-cf {.(SAND _ (OR _ _))} {.(SAND (SAND _ _) _)} {.(OR (SAND _ _) (SAND _ _))} (⟿-SAND₂-assoc d₁) ⟿-SAND-distl = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND (SAND _ _) _)} {.(SAND _ _)} (⟿-SAND₂-assoc d₁) (⟿-SAND₁ d₂) = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND (SAND _ _) _)} {.(SAND (SAND _ _) _)} (⟿-SAND₂-assoc d₁) (⟿-SAND₂-assoc d₂) = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND (SAND _ _) _)} {.(SAND _ _)} (⟿-SAND₂-assoc d₁) (⟿-SAND₂ d₂ x) = {!!}
--- ⟿-local-cf {.(SAND _ (OR _ _))} {.(SAND _ _)} {.(OR (SAND _ _) (SAND _ _))} (⟿-SAND₂ d₁ x) ⟿-SAND-distl = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND _ _)} {.(SAND _ _)} (⟿-SAND₂ d₁ x) (⟿-SAND₁ d₂) = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND _ _)} {.(SAND (SAND _ _) _)} (⟿-SAND₂ d₁ x) (⟿-SAND₂-assoc d₂) = {!!}
--- ⟿-local-cf {.(SAND _ _)} {.(SAND _ _)} {.(SAND _ _)} (⟿-SAND₂ d₁ x) (⟿-SAND₂ d₂ x₁) = {!!}
-
--- --------------------------------------------------------------------------------------------
--- --                                                                                        --
--- -- Full Rewrite System                                                                    --
--- --                                                                                        --
--- --------------------------------------------------------------------------------------------
-
--- rm-cts : ATree → ATree
--- rm-cts (NODE b) = NODE b
--- rm-cts (AND A B) = AND (rm-cts A) (rm-cts B) 
--- rm-cts (OR A B) with A ≅ B
--- rm-cts (OR A _) | inj₁ x = (rm-cts A)
--- rm-cts (OR A B) | inj₂ y with (rm-cts A) | (rm-cts B)
--- ... | T₁ | T₂ with T₁ ≅ T₂
--- rm-cts (OR A B) | inj₂ y | T₁ | T₂ | (inj₁ x) = T₁
--- rm-cts (OR A B) | inj₂ y₁ | T₁ | T₂ | (inj₂ y) = OR T₁ T₂
--- rm-cts (SAND A B) = SAND (rm-cts A) (rm-cts B) 
-
--- -- _≈_ : ATree → ATree → Set
--- -- t₁ ≈ t₂ with (rm-cts t₁) | (rm-cts t₂)
--- -- ... | s₁ | s₂ = Σ[ s₃ ∈ ATree ]( Σ[ s₄ ∈ ATree ](
--- --              (s₁ ⟿ᵣ* s₃) × (s₂ ⟿ᵣ* s₄) -- Put both into proper form.
--- --         × (let s₅ = rm-cts s₃
--- --                s₆ = rm-cts s₄
--- --             in s₅ ≈-sym s₆ )))
-
--- -- ⟿©*-contracts : ∀{t} → t ⟿©* (rm-cts t)
--- -- ⟿©*-contracts {OR A B} with A ≅ B
--- -- ... | inj₁ refl = let d = ⟿©*-contracts {A} in ⟿©-trans (⟿©-step ⟿©-contract) d
--- -- ... | inj₂ ⊥-pf₁ with (rm-cts A) ≅ (rm-cts B)
--- -- ... | inj₁ p = ⟿©-trans (⟿©*-OR (⟿©*-contracts {A}) (⟿©*-contracts {B})) (aux p)
--- --   where
--- --     aux : (rm-cts A) ≡ (rm-cts B) → OR (rm-cts A) (rm-cts B) ⟿©* rm-cts A
--- --     aux p rewrite p = ⟿©-step ⟿©-contract
--- -- ... | inj₂ ⊥-pf₂ = ⟿©*-OR (⟿©*-contracts {A}) ⟿©*-contracts
--- -- ⟿©*-contracts {NODE b} = ⟿©-refl
--- -- ⟿©*-contracts {AND A B} = ⟿©*-AND ⟿©*-contracts ⟿©*-contracts
--- -- ⟿©*-contracts {SAND A B} = ⟿©*-SAND ⟿©*-contracts ⟿©*-contracts
-
--- -- aux₁ : ∀{t₁ s₁ s₂} → (rm-cts t₁) ≈-sym s₂ → t₁ ⟿ᵣ* s₁ → (rm-cts s₁) ≈-sym s₂
--- -- aux₁ {t₁}{s₁}{s₂} p₁ p₂ = {!!}
-
--- -- ≈trans : ∀{t₂ t₁ t₃} → t₁ ≈ t₂ → t₂ ≈ t₃ → t₁ ≈ t₃
--- -- ≈trans {t₂} {t₁} {t₃} (s₁ , s₂ , c₁ , c₂ , p₁-sym) (s₃ , s₄ , c'₁ , c'₂ , p₂-sym) with ⟿ᵣ-CR c₂ c'₁
--- -- ... | (s , r₁ , r₂) = s₁ , (s , (c₁ , ({!!} , ≈-sym-sym (aux₁ {s₂}{s}{rm-cts s₁} (≈-sym-sym p₁-sym) r₁))))
-
--- -- ⟿©*-≈© : ∀{t s} → t ⟿©* s → t ≈© s
--- -- ⟿©*-≈© {t} {s} (⟿©-step x) = ≈©-reduce x
--- -- ⟿©*-≈© {t} {.t} ⟿©-refl = ≈©-refl
--- -- ⟿©*-≈© {t} {s} (⟿©-trans {_}{t'}{_} p₁ p₂) with ⟿©*-≈© p₁ | ⟿©*-≈© p₂
--- -- ... | r₁ | r₂ = ≈©-trans r₁ r₂
-
--- -- postulate CR-⟿© : ∀{t s₁ s₂} → t ⟿©* s₁ → t ⟿©* s₂ → Σ[ s' ∈ ATree ]( (s₁ ⟿©* s') × (s₂ ⟿©* s') )
--- -- postulate CR-⟿ : ∀{t s₁ s₂} → t ⟿* s₁ → t ⟿* s₂ → Σ[ s' ∈ ATree ]( (s₁ ⟿* s') × (s₂ ⟿* s') )
-
--- -- _⟱_ : ∀(t₁ t₂ : ATree) → Set
--- -- t₁ ⟱ t₂ = Σ[ s ∈ ATree ]( t₁ ⟿* s × t₂ ⟿* s )
-
--- -- _≃ⱼ_ : ∀(t₁ t₂ : ATree) → Set
--- -- t₁ ≃ⱼ t₂ = Σ[ s₁ ∈ ATree ](Σ[ s₂ ∈ ATree ](t₁ ⟿©* s₁ × t₂ ⟿©* s₂ × s₁ ⟱ s₂))
-
--- -- _≃_ : ∀(t₁ t₂ : ATree) → Set
--- -- t₁ ≃ t₂ = Σ[ s₁ ∈ ATree ](Σ[ s₂ ∈ ATree ](t₁ ⟿©* s₁ × t₂ ⟿©* s₂ × s₁ ≈ s₂))
-
--- -- ⟱-refl : ∀{t} → t ⟱ t
--- -- ⟱-refl {t} = t , (⟿-refl , ⟿-refl)
-
--- -- ⟱-sym : ∀{t₁ t₂} → t₁ ⟱ t₂ → t₂ ⟱ t₁
--- -- ⟱-sym {t₁} {t₂} (s₁ , p₁ , p₂) = s₁ , (p₂ , p₁)
-
--- -- ⟱-trans : ∀{t₁ t₂ t₃} → t₁ ⟱ t₂ → t₂ ⟱ t₃ → t₁ ⟱ t₃
--- -- ⟱-trans {t₁}{t₂}{t₃} (s₁ , p₁ , p₂) (s₂ , p₃ , p₄) with CR-⟿ p₂ p₃
--- -- ... | (s₃ , p₅ , p₆) = s₃ , ((⟿-trans p₁ p₅) , ⟿-trans p₄ p₆)
-
--- -- ⟿-⟿© : ∀{t₁ t₂} → t₁ ⟿ t₂ → t₁ ⟿© t₂
--- -- ⟿-⟿© {NODE b} {NODE b₁} ()
--- -- ⟿-⟿© {NODE b} {AND t₄ t₅} ()
--- -- ⟿-⟿© {NODE b} {OR t₄ t₅} ()
--- -- ⟿-⟿© {NODE b} {SAND t₄ t₅} ()
--- -- ⟿-⟿© {AND t₄ t₅} {NODE b} ()
--- -- ⟿-⟿© {AND t₄ t₅} {AND .t₅ .t₄} ⟿-AND-sym = ⟿©-AND-sym
--- -- ⟿-⟿© {AND t₄ .(AND _ t₇)} {AND .(AND t₄ _) t₇} ⟿-AND-assoc = ⟿©-AND-assoc
--- -- ⟿-⟿© {AND t₄ t₅} {AND t₆ .t₅} (⟿-AND₁ p) = ⟿©-AND₁ (⟿-⟿© p)
--- -- ⟿-⟿© {AND t₄ t₅} {AND .t₄ t₇} (⟿-AND₂ p) = ⟿©-AND₂ (⟿-⟿© p)
--- -- ⟿-⟿© {AND t₄ .(OR _ _)} {OR .(AND t₄ _) .(AND t₄ _)} ⟿-AND-distl = ⟿©-AND-distl
--- -- ⟿-⟿© {AND .(OR _ _) t₅} {OR .(AND _ t₅) .(AND _ t₅)} ⟿-AND-distr = ⟿©-AND-distr
--- -- ⟿-⟿© {AND t₄ t₅} {SAND t₆ t₇} ()
--- -- ⟿-⟿© {OR t₄ t₅} {NODE b} ()
--- -- ⟿-⟿© {OR t₄ t₅} {AND t₆ t₇} ()
--- -- ⟿-⟿© {OR t₄ t₅} {OR .t₅ .t₄} ⟿-OR-sym = ⟿©-OR-sym
--- -- ⟿-⟿© {OR t₄ .(OR _ t₇)} {OR .(OR t₄ _) t₇} ⟿-OR-assoc = ⟿©-OR-assoc
--- -- ⟿-⟿© {OR t₄ t₅} {OR t₆ .t₅} (⟿-OR₁ p) = ⟿©-OR₁ (⟿-⟿© p)
--- -- ⟿-⟿© {OR t₄ t₅} {OR .t₄ t₇} (⟿-OR₂ p) = ⟿©-OR₂ (⟿-⟿© p)
--- -- ⟿-⟿© {OR t₄ t₅} {SAND t₆ t₇} ()
--- -- ⟿-⟿© {SAND t₄ t₅} {NODE b} ()
--- -- ⟿-⟿© {SAND t₄ t₅} {AND t₆ t₇} ()
--- -- ⟿-⟿© {SAND t₄ .(OR _ _)} {OR .(SAND t₄ _) .(SAND t₄ _)} ⟿-SAND-distl = ⟿©-SAND-distl
--- -- ⟿-⟿© {SAND .(OR _ _) t₅} {OR .(SAND _ t₅) .(SAND _ t₅)} ⟿-SAND-distr = ⟿©-SAND-distr
--- -- ⟿-⟿© {SAND t₄ .(SAND _ t₇)} {SAND .(SAND t₄ _) t₇} ⟿-SAND-assoc = ⟿©-SAND-assoc
--- -- ⟿-⟿© {SAND t₄ t₅} {SAND t₆ .t₅} (⟿-SAND₁ p) = ⟿©-SAND₁ (⟿-⟿© p)
--- -- ⟿-⟿© {SAND t₄ t₅} {SAND .t₄ t₇} (⟿-SAND₂ p) = ⟿©-SAND₂ (⟿-⟿© p)
-
--- -- ⟿*-⟿©* : ∀{t₁ t₂} → t₁ ⟿* t₂ → t₁ ⟿©* t₂
--- -- ⟿*-⟿©* (⟿-step x) = ⟿©-step (⟿-⟿© x)
--- -- ⟿*-⟿©* ⟿-refl = ⟿©-refl
--- -- ⟿*-⟿©* (⟿-trans p₁ p₂) = ⟿©-trans (⟿*-⟿©* p₁) (⟿*-⟿©* p₂)
-
--- -- ≃ⱼ-refl : ∀{t} → t ≃ⱼ t
--- -- ≃ⱼ-refl {t} = t , (t , (⟿©-refl , (⟿©-refl , (t , (⟿-refl , ⟿-refl)))))
-
--- -- ≃ⱼ-sym : ∀{t₁ t₂} → t₁ ≃ⱼ t₂ → t₂ ≃ⱼ t₁
--- -- ≃ⱼ-sym {t₁}{t₂} (s₁ , s₂ , p₁ , p₂ , s₃ , p₄ , p₅) = s₂ , (s₁ , (p₂ , (p₁ , (s₃ , (p₅ , p₄)))))
-
--- -- ≃ⱼ-trans : ∀{t₁ t₂ t₃} → t₁ ≃ⱼ t₂ → t₂ ≃ⱼ t₃ → t₁ ≃ⱼ t₃
--- -- ≃ⱼ-trans {t₁}{t₂}{t₃} (s₁ , s₂ , p₁ , p₂ , s₃ , p₄ , p₅) (s₄ , s₅ , p₆ , p₇ , s₆ , p₈ , p₉) with CR-⟿© p₂ p₆
--- -- ... | (s₁' , r₁ , r₂) with CR-⟿© (⟿*-⟿©* p₅) r₁
--- -- ... | (s₂' , r₃ , r₄) with CR-⟿© r₂ (⟿*-⟿©* p₈)
--- -- ... | (s₃' , r₅ , r₆) with CR-⟿© r₄ r₅
--- -- ... | (s₄' , r₇ , r₈) = s₄' , (s₄' , (⟿©-trans p₁ (⟿©-trans (⟿*-⟿©* p₄) (⟿©-trans r₃ r₇)) , (⟿©-trans p₇ (⟿©-trans (⟿*-⟿©* p₉) (⟿©-trans r₆ r₈)) , (s₄' , (⟿-refl , ⟿-refl)))))
-
--- -- ≈-≈© : ∀{t₁ t₂} → t₁ ≈ t₂ → t₁ ≈© t₂
--- -- ≈-≈© (≈-reduce x) = ≈©-reduce (⟿-⟿© x)
--- -- ≈-≈© ≈-refl = ≈©-refl
--- -- ≈-≈© (≈-sym p) = ≈©-sym (≈-≈© p)
--- -- ≈-≈© (≈-trans p₁ p₂) = ≈©-trans (≈-≈© p₁) (≈-≈© p₂)
-
--- -- ⟿*-≈ : ∀{t₁ t₂} → t₁ ⟿* t₂ → t₁ ≈ t₂
--- -- ⟿*-≈ (⟿-step x) = ≈-reduce x
--- -- ⟿*-≈ ⟿-refl = ≈-refl
--- -- ⟿*-≈ (⟿-trans p₁ p₂) with ⟿*-≈ p₁ | ⟿*-≈ p₂
--- -- ... | r₁ | r₂ = ≈-trans r₁ r₂
-
--- -- ⟱-≈ : ∀{t₁ t₂} → t₁ ⟱ t₂ → t₁ ≈ t₂
--- -- ⟱-≈ {t₁}{t₂} (s , p₁ , p₂) with ⟿*-≈ p₁ | ⟿*-≈ p₂
--- -- ... | r₁ | r₂ = ≈-trans r₁ (≈-sym r₂)
-
--- -- ≃ⱼ-≃ : ∀{t₁ t₂} → t₁ ≃ⱼ t₂ → t₁ ≃ t₂
--- -- ≃ⱼ-≃ {t₁}{t₂} (s₁ , s₂ , p₁ , p₂ , p₃) = s₁ , (s₂ , (p₁ , (p₂ , ⟱-≈ p₃)))
-
--- -- ≈-⟱ : ∀{t₁ t₂} → t₁ ≈ t₂ → t₁ ⟱ t₂
--- -- ≈-⟱ {t₁} {t₂} (≈-reduce x) = t₂ , ((⟿-step x) , ⟿-refl)
--- -- ≈-⟱ {t₁} {.t₁} ≈-refl = t₁ , (⟿-refl , ⟿-refl)
--- -- ≈-⟱ {t₁} {t₂} (≈-sym p) with ≈-⟱ p
--- -- ... | (s , p₁ , p₂) = s , (p₂ , p₁)
--- -- ≈-⟱ {t₁} {t₂} (≈-trans p₁ p₂) with ≈-⟱ p₁ | ≈-⟱ p₂
--- -- ... | r₁ | r₂ = ⟱-trans r₁ r₂
-
--- -- ≃-≃ⱼ : ∀{t₁ t₂} → t₁ ≃ t₂ → t₁ ≃ⱼ t₂
--- -- ≃-≃ⱼ {t₁}{t₂} (s₁ , s₂ , p₁ , p₂ , p₃) = s₁ , (s₂ , (p₁ , (p₂ , ≈-⟱ p₃)))
-
--- -- ≃-refl : ∀{t} → t ≃ t
--- -- ≃-refl {t} = ≃ⱼ-≃ (≃ⱼ-refl {t})
-
--- -- ≃-sym : ∀{t₁ t₂} → t₁ ≃ t₂ → t₂ ≃ t₁
--- -- ≃-sym p = ≃ⱼ-≃ (≃ⱼ-sym (≃-≃ⱼ p))
-
--- -- ≃-trans : ∀{t₁ t₂ t₃} → t₁ ≃ t₂ → t₂ ≃ t₃ → t₁ ≃ t₃
--- -- ≃-trans p₁ p₂ = ≃ⱼ-≃ (≃ⱼ-trans (≃-≃ⱼ p₁) (≃-≃ⱼ p₂))
-
--- -- ≈©-≃ : ∀{t₁ t₂} → t₁ ≈© t₂ → t₁ ≃ t₂
--- -- ≈©-≃ {t₁} {t₂} (≈©-reduce x) = t₂ , (t₂ , ((⟿©-step x) , (⟿©-refl , ≈-refl)))
--- -- ≈©-≃ {t₁} {.t₁} ≈©-refl = ≃-refl
--- -- ≈©-≃ {t₁} {t₂} (≈©-sym p) = ≃-sym (≈©-≃ p)
--- -- ≈©-≃ {t₁} {t₂} (≈©-trans p₁ p₂) = ≃-trans (≈©-≃ p₁) (≈©-≃ p₂)
-
--- -- ≈©-≃-inv : ∀{t₁ t₂} → t₁ ≃ t₂ → t₁ ≈© t₂
--- -- ≈©-≃-inv {t₁}{t₂} (s₁ , s₂ , p₁ , p₂ , p₃) = ≈©-trans (⟿©*-≈© p₁) (≈©-trans (≈-≈© p₃) (≈©-sym (⟿©*-≈© p₂)))
-
--- -- open import nat
-
--- -- ∣_∣ : ATree → nat
--- -- ∣ NODE b ∣ = 1
--- -- ∣ AND t₁ t₂ ∣ = 2 * (∣ t₁ ∣ * ∣ t₂ ∣)
--- -- ∣ OR t₁ t₂ ∣ = 2 + (∣ t₁ ∣ + ∣ t₂ ∣)
--- -- ∣ SAND t₁ t₂ ∣ = 2 * (∣ t₁ ∣ * ∣ t₂ ∣)
-
--- -- at₁ : ∀(b : 𝔹) → bool
--- -- at₁ b = ∣ SAND (OR (NODE b) (NODE b)) (NODE b) ∣ > ∣ (OR (SAND (NODE b) (NODE b)) (SAND (NODE b) (NODE b))) ∣
+unique-normf : ∀{A N₁ N₂} → isNorm N₁ → isNorm N₂ → A ⟿ N₁ → A ⟿ N₂ → N₁ ≡ N₂
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} {.(OR (AND (AND _ _) _) (AND _ _))} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₁ x) (⟿-AND-distl-assoc₁ x₁) = refl
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND _ (AND _ _)))} {.(OR (AND _ (AND _ _)) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₁ ()) (⟿-AND-distl-assoc₂ x₁)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND _ (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₁ ()) ⟿-AND-distl-assoc₃
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} {.(OR (AND _ (AND _ _)) (AND _ _))} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₁ x) (⟿-AND-distl () x₂)
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} {.(AND _ (OR (AND _ _) _))} n-pf₁ () (⟿-AND-distl-assoc₁ x) (⟿-AND₁ d₂)
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} {.(AND (AND _ _) _)} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₁ x) (⟿-AND₂-assoc ())
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} {.(AND _ (OR _ _))} n-pf₁ () (⟿-AND-distl-assoc₁ x) (⟿-AND₂ (⟿-OR₁ d₂) x₁)
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} {.(AND _ (OR (AND _ _) _))} n-pf₁ () (⟿-AND-distl-assoc₁ x) (⟿-AND₂ (⟿-OR₂-assoc-contract d₂) x₁)
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} {.(AND _ (OR (OR (AND _ _) _) _))} n-pf₁ () (⟿-AND-distl-assoc₁ x) (⟿-AND₂ (⟿-OR₂-assoc d₂ x₁) x₂)
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} {.(AND _ (OR (AND _ _) _))} n-pf₁ () (⟿-AND-distl-assoc₁ x) (⟿-AND₂ (⟿-OR₂ d₂ x₁) x₂)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND _ (AND _ _)) (AND (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ (AND _ _)))} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₂ ()) (⟿-AND-distl-assoc₁ x₁)
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} {.(OR (AND _ _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₂ x) (⟿-AND-distl-assoc₂ x₁) = refl
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND _ (AND _ _)) (AND (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₂ ()) ⟿-AND-distl-assoc₃
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} {.(OR (AND _ _) (AND _ (AND _ _)))} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₂ x) (⟿-AND-distl x₁ ())
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} {.(AND _ (OR _ (AND _ _)))} n-pf₁ () (⟿-AND-distl-assoc₂ x) (⟿-AND₁ d₂)
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} {.(AND (AND _ _) _)} n-pf₁ n-pf₂ (⟿-AND-distl-assoc₂ x) (⟿-AND₂-assoc ())
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} {.(AND _ (OR _ (AND _ _)))} n-pf₁ () (⟿-AND-distl-assoc₂ x) (⟿-AND₂ (⟿-OR₁ d₂) x₁)
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} {.(AND _ (OR _ _))} n-pf₁ () (⟿-AND-distl-assoc₂ x) (⟿-AND₂ (⟿-OR₂-assoc-contract d₂) x₁)
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} {.(AND _ (OR (OR _ _) _))} n-pf₁ () (⟿-AND-distl-assoc₂ x) (⟿-AND₂ (⟿-OR₂-assoc d₂ x₁) x₂)
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} {.(AND _ (OR _ _))} n-pf₁ () (⟿-AND-distl-assoc₂ x) (⟿-AND₂ (⟿-OR₂ d₂ x₁) x₂)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ (AND _ _)))} n-pf₁ n-pf₂ ⟿-AND-distl-assoc₃ (⟿-AND-distl-assoc₁ ())
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(OR (AND _ (AND _ _)) (AND (AND _ _) _))} n-pf₁ n-pf₂ ⟿-AND-distl-assoc₃ (⟿-AND-distl-assoc₂ ())
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} n-pf₁ n-pf₂ ⟿-AND-distl-assoc₃ ⟿-AND-distl-assoc₃ = refl
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(OR (AND _ (AND _ _)) (AND _ (AND _ _)))} n-pf₁ n-pf₂ ⟿-AND-distl-assoc₃ (⟿-AND-distl () x₁)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(AND _ (OR (AND _ _) (AND _ _)))} n-pf₁ () ⟿-AND-distl-assoc₃ (⟿-AND₁ d₂)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(AND (AND _ _) _)} n-pf₁ n-pf₂ ⟿-AND-distl-assoc₃ (⟿-AND₂-assoc ())
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(AND _ (OR _ (AND _ _)))} n-pf₁ () ⟿-AND-distl-assoc₃ (⟿-AND₂ (⟿-OR₁ d₂) x)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(AND _ (OR (AND _ _) _))} n-pf₁ () ⟿-AND-distl-assoc₃ (⟿-AND₂ (⟿-OR₂-assoc-contract d₂) x)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(AND _ (OR (OR (AND _ _) _) _))} n-pf₁ () ⟿-AND-distl-assoc₃ (⟿-AND₂ (⟿-OR₂-assoc d₂ x) x₁)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} {.(AND _ (OR (AND _ _) _))} n-pf₁ () ⟿-AND-distl-assoc₃ (⟿-AND₂ (⟿-OR₂ d₂ x) x₁)
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(OR (AND _ (AND _ _)) (AND _ _))} {.(OR (AND (AND _ _) _) (AND _ _))} n-pf₁ n-pf₂ (⟿-AND-distl () x₁) (⟿-AND-distl-assoc₁ x₂)
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND-distl x ()) (⟿-AND-distl-assoc₂ x₂)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND _ (AND _ _)) (AND _ (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND-distl () x₁) ⟿-AND-distl-assoc₃
+unique-normf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(OR (AND _ _) (AND _ _))} n-pf₁ n-pf₂ (⟿-AND-distl x x₁) (⟿-AND-distl x₂ x₃) = refl
+unique-normf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(AND _ (OR _ _))} n-pf₁ () (⟿-AND-distl x x₁) (⟿-AND₁ d₂)
+unique-normf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(AND (AND _ _) _)} n-pf₁ n-pf₂ (⟿-AND-distl x x₁) (⟿-AND₂-assoc ())
+unique-normf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(AND _ (OR _ _))} n-pf₁ () (⟿-AND-distl x x₁) (⟿-AND₂ (⟿-OR₁ d₂) x₂)
+unique-normf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(AND _ (OR _ _))} n-pf₁ () (⟿-AND-distl x x₁) (⟿-AND₂ (⟿-OR₂-assoc-contract d₂) x₂)
+unique-normf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(AND _ (OR (OR _ _) _))} n-pf₁ () (⟿-AND-distl x x₁) (⟿-AND₂ (⟿-OR₂-assoc d₂ x₂) x₃)
+unique-normf {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} {.(AND _ (OR _ _))} n-pf₁ () (⟿-AND-distl x x₁) (⟿-AND₂ (⟿-OR₂ d₂ x₂) x₃)
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND _ _))} {.(OR (SAND (SAND _ _) _) (SAND _ _))} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₁ x) (⟿-SAND-distl-assoc₁ x₁) = refl
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND _ (SAND _ _)))} {.(OR (SAND _ (SAND _ _)) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₁ ()) (⟿-SAND-distl-assoc₂ x₁)
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND _ (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₁ ()) ⟿-SAND-distl-assoc₃
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND _ _))} {.(OR (SAND _ (SAND _ _)) (SAND _ _))} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₁ x) (⟿-SAND-distl () x₂)
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND _ _))} {.(SAND _ (OR (SAND _ _) _))} n-pf₁ () (⟿-SAND-distl-assoc₁ x) (⟿-SAND₁ d₂)
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND _ _))} {.(SAND (SAND _ _) _)} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₁ x) (⟿-SAND₂-assoc ())
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND _ _))} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₁ x) (⟿-SAND₂ d₂ x₁) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND _ (SAND _ _)) (SAND (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND _ (SAND _ _)))} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₂ ()) (⟿-SAND-distl-assoc₁ x₁)
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(OR (SAND _ _) (SAND (SAND _ _) _))} {.(OR (SAND _ _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₂ x) (⟿-SAND-distl-assoc₂ x₁) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND _ (SAND _ _)) (SAND (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₂ ()) ⟿-SAND-distl-assoc₃
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(OR (SAND _ _) (SAND (SAND _ _) _))} {.(OR (SAND _ _) (SAND _ (SAND _ _)))} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₂ x) (⟿-SAND-distl x₁ ())
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(OR (SAND _ _) (SAND (SAND _ _) _))} {.(SAND _ (OR _ (SAND _ _)))} n-pf₁ () (⟿-SAND-distl-assoc₂ x) (⟿-SAND₁ d₂)
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(OR (SAND _ _) (SAND (SAND _ _) _))} {.(SAND (SAND _ _) _)} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₂ x) (⟿-SAND₂-assoc d₂) = {!!}
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(OR (SAND _ _) (SAND (SAND _ _) _))} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND-distl-assoc₂ x) (⟿-SAND₂ d₂ x₁) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND _ (SAND _ _)))} n-pf₁ n-pf₂ ⟿-SAND-distl-assoc₃ (⟿-SAND-distl-assoc₁ ())
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} {.(OR (SAND _ (SAND _ _)) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ ⟿-SAND-distl-assoc₃ (⟿-SAND-distl-assoc₂ ())
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ ⟿-SAND-distl-assoc₃ ⟿-SAND-distl-assoc₃ = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} {.(OR (SAND _ (SAND _ _)) (SAND _ (SAND _ _)))} n-pf₁ n-pf₂ ⟿-SAND-distl-assoc₃ (⟿-SAND-distl () x₁)
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} {.(SAND _ (OR (SAND _ _) (SAND _ _)))} n-pf₁ () ⟿-SAND-distl-assoc₃ (⟿-SAND₁ d₂)
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} {.(SAND (SAND _ _) _)} n-pf₁ n-pf₂ ⟿-SAND-distl-assoc₃ (⟿-SAND₂-assoc d₂) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} {.(SAND _ _)} n-pf₁ n-pf₂ ⟿-SAND-distl-assoc₃ (⟿-SAND₂ d₂ x) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(OR (SAND _ (SAND _ _)) (SAND _ _))} {.(OR (SAND (SAND _ _) _) (SAND _ _))} n-pf₁ n-pf₂ (⟿-SAND-distl () x₁) (⟿-SAND-distl-assoc₁ x₂)
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(OR (SAND _ _) (SAND _ (SAND _ _)))} {.(OR (SAND _ _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND-distl x ()) (⟿-SAND-distl-assoc₂ x₂)
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND _ (SAND _ _)) (SAND _ (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND-distl () x₁) ⟿-SAND-distl-assoc₃
+unique-normf {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} {.(OR (SAND _ _) (SAND _ _))} n-pf₁ n-pf₂ (⟿-SAND-distl x x₁) (⟿-SAND-distl x₂ x₃) = {!!}
+unique-normf {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} {.(SAND _ (OR _ _))} n-pf₁ () (⟿-SAND-distl x x₁) (⟿-SAND₁ d₂)
+unique-normf {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} {.(SAND (SAND _ _) _)} n-pf₁ n-pf₂ (⟿-SAND-distl x x₁) (⟿-SAND₂-assoc d₂) = {!!}
+unique-normf {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND-distl x x₁) (⟿-SAND₂ d₂ x₂) = {!!}
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(AND _ (OR (AND _ _) _))} {.(OR (AND (AND _ _) _) (AND _ _))} () n-pf₂ (⟿-AND₁ d₁) (⟿-AND-distl-assoc₁ x)
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(AND _ (OR _ (AND _ _)))} {.(OR (AND _ _) (AND (AND _ _) _))} () n-pf₂ (⟿-AND₁ d₁) (⟿-AND-distl-assoc₂ x)
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(AND _ (OR (AND _ _) (AND _ _)))} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} () n-pf₂ (⟿-AND₁ d₁) ⟿-AND-distl-assoc₃
+unique-normf {.(AND _ (OR _ _))} {.(AND _ (OR _ _))} {.(OR (AND _ _) (AND _ _))} () n-pf₂ (⟿-AND₁ d₁) (⟿-AND-distl x x₁)
+unique-normf {.(AND _ _)} {.(AND _ _)} {.(AND _ _)} n-pf₁ n-pf₂ (⟿-AND₁ d₁) (⟿-AND₁ d₂) = {!!}
+unique-normf {.(AND _ _)} {.(AND _ _)} {.(AND (AND _ _) _)} n-pf₁ n-pf₂ (⟿-AND₁ d₁) (⟿-AND₂-assoc d₂) = {!!}
+unique-normf {.(AND _ _)} {.(AND _ _)} {.(AND _ _)} n-pf₁ n-pf₂ (⟿-AND₁ d₁) (⟿-AND₂ d₂ x) = {!!}
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(AND (AND _ _) _)} {.(OR (AND (AND _ _) _) (AND _ _))} n-pf₁ n-pf₂ (⟿-AND₂-assoc d₁) (⟿-AND-distl-assoc₁ x) = {!!}
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(AND (AND _ _) _)} {.(OR (AND _ _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND₂-assoc d₁) (⟿-AND-distl-assoc₂ x) = {!!}
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(AND (AND _ _) _)} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND₂-assoc d₁) ⟿-AND-distl-assoc₃ = {!!}
+unique-normf {.(AND _ (OR _ _))} {.(AND (AND _ _) _)} {.(OR (AND _ _) (AND _ _))} n-pf₁ n-pf₂ (⟿-AND₂-assoc d₁) (⟿-AND-distl x x₁) = {!!}
+unique-normf {.(AND _ _)} {.(AND (AND _ _) _)} {.(AND _ _)} n-pf₁ n-pf₂ (⟿-AND₂-assoc d₁) (⟿-AND₁ d₂) = {!!}
+unique-normf {.(AND _ _)} {.(AND (AND _ _) _)} {.(AND (AND _ _) _)} n-pf₁ n-pf₂ (⟿-AND₂-assoc d₁) (⟿-AND₂-assoc d₂) = {!!}
+unique-normf {.(AND _ _)} {.(AND (AND _ _) _)} {.(AND _ _)} n-pf₁ n-pf₂ (⟿-AND₂-assoc d₁) (⟿-AND₂ d₂ x) = {!!}
+unique-normf {.(AND _ (OR (AND _ _) _))} {.(AND _ _)} {.(OR (AND (AND _ _) _) (AND _ _))} n-pf₁ n-pf₂ (⟿-AND₂ d₁ x) (⟿-AND-distl-assoc₁ x₁) = {!!}
+unique-normf {.(AND _ (OR _ (AND _ _)))} {.(AND _ _)} {.(OR (AND _ _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND₂ d₁ x) (⟿-AND-distl-assoc₂ x₁) = {!!}
+unique-normf {.(AND _ (OR (AND _ _) (AND _ _)))} {.(AND _ _)} {.(OR (AND (AND _ _) _) (AND (AND _ _) _))} n-pf₁ n-pf₂ (⟿-AND₂ d₁ x) ⟿-AND-distl-assoc₃ = {!!}
+unique-normf {.(AND _ (OR _ _))} {.(AND _ _)} {.(OR (AND _ _) (AND _ _))} n-pf₁ n-pf₂ (⟿-AND₂ d₁ x) (⟿-AND-distl x₁ x₂) = {!!}
+unique-normf {.(AND _ _)} {.(AND _ _)} {.(AND _ _)} n-pf₁ n-pf₂ (⟿-AND₂ d₁ x) (⟿-AND₁ d₂) = {!!}
+unique-normf {.(AND _ _)} {.(AND _ _)} {.(AND (AND _ _) _)} n-pf₁ n-pf₂ (⟿-AND₂ d₁ x) (⟿-AND₂-assoc d₂) = {!!}
+unique-normf {.(AND _ _)} {.(AND _ _)} {.(AND _ _)} n-pf₁ n-pf₂ (⟿-AND₂ d₁ x) (⟿-AND₂ d₂ x₁) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₁ d₁) (⟿-OR₁ d₂) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₁ d₁) (⟿-OR₂-assoc-contract d₂) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR (OR _ _) _)} n-pf₁ n-pf₂ (⟿-OR₁ d₁) (⟿-OR₂-assoc d₂ x) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₁ d₁) (⟿-OR₂ d₂ x) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂-assoc-contract d₁) (⟿-OR₁ d₂) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂-assoc-contract d₁) (⟿-OR₂-assoc-contract d₂) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR (OR _ _) _)} n-pf₁ n-pf₂ (⟿-OR₂-assoc-contract d₁) (⟿-OR₂-assoc d₂ x) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂-assoc-contract d₁) (⟿-OR₂ d₂ x) = {!!}
+unique-normf {.(OR _ _)} {.(OR (OR _ _) _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂-assoc d₁ x) (⟿-OR₁ d₂) = {!!}
+unique-normf {.(OR _ _)} {.(OR (OR _ _) _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂-assoc d₁ x) (⟿-OR₂-assoc-contract d₂) = {!!}
+unique-normf {.(OR _ _)} {.(OR (OR _ _) _)} {.(OR (OR _ _) _)} n-pf₁ n-pf₂ (⟿-OR₂-assoc d₁ x) (⟿-OR₂-assoc d₂ x₁) = {!!}
+unique-normf {.(OR _ _)} {.(OR (OR _ _) _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂-assoc d₁ x) (⟿-OR₂ d₂ x₁) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂ d₁ x) (⟿-OR₁ d₂) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂ d₁ x) (⟿-OR₂-assoc-contract d₂) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR (OR _ _) _)} n-pf₁ n-pf₂ (⟿-OR₂ d₁ x) (⟿-OR₂-assoc d₂ x₁) = {!!}
+unique-normf {.(OR _ _)} {.(OR _ _)} {.(OR _ _)} n-pf₁ n-pf₂ (⟿-OR₂ d₁ x) (⟿-OR₂ d₂ x₁) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(SAND _ (OR (SAND _ _) _))} {.(OR (SAND (SAND _ _) _) (SAND _ _))} () n-pf₂ (⟿-SAND₁ d₁) (⟿-SAND-distl-assoc₁ x)
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(SAND _ (OR _ (SAND _ _)))} {.(OR (SAND _ _) (SAND (SAND _ _) _))} () n-pf₂ (⟿-SAND₁ d₁) (⟿-SAND-distl-assoc₂ x)
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} () n-pf₂ (⟿-SAND₁ d₁) ⟿-SAND-distl-assoc₃
+unique-normf {.(SAND _ (OR _ _))} {.(SAND _ (OR _ _))} {.(OR (SAND _ _) (SAND _ _))} () n-pf₂ (⟿-SAND₁ d₁) (⟿-SAND-distl x x₁)
+unique-normf {.(SAND _ _)} {.(SAND _ _)} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND₁ d₁) (⟿-SAND₁ d₂) = {!!}
+unique-normf {.(SAND _ _)} {.(SAND _ _)} {.(SAND (SAND _ _) _)} n-pf₁ n-pf₂ (⟿-SAND₁ d₁) (⟿-SAND₂-assoc d₂) = {!!}
+unique-normf {.(SAND _ _)} {.(SAND _ _)} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND₁ d₁) (⟿-SAND₂ d₂ x) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(SAND (SAND _ _) _)} {.(OR (SAND (SAND _ _) _) (SAND _ _))} n-pf₁ n-pf₂ (⟿-SAND₂-assoc d₁) (⟿-SAND-distl-assoc₁ x) = {!!}
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(SAND (SAND _ _) _)} {.(OR (SAND _ _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND₂-assoc d₁) (⟿-SAND-distl-assoc₂ x) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(SAND (SAND _ _) _)} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND₂-assoc d₁) ⟿-SAND-distl-assoc₃ = {!!}
+unique-normf {.(SAND _ (OR _ _))} {.(SAND (SAND _ _) _)} {.(OR (SAND _ _) (SAND _ _))} n-pf₁ n-pf₂ (⟿-SAND₂-assoc d₁) (⟿-SAND-distl x x₁) = {!!}
+unique-normf {.(SAND _ _)} {.(SAND (SAND _ _) _)} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND₂-assoc d₁) (⟿-SAND₁ d₂) = {!!}
+unique-normf {.(SAND _ _)} {.(SAND (SAND _ _) _)} {.(SAND (SAND _ _) _)} n-pf₁ n-pf₂ (⟿-SAND₂-assoc d₁) (⟿-SAND₂-assoc d₂) = {!!}
+unique-normf {.(SAND _ _)} {.(SAND (SAND _ _) _)} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND₂-assoc d₁) (⟿-SAND₂ d₂ x) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) _))} {.(SAND _ _)} {.(OR (SAND (SAND _ _) _) (SAND _ _))} n-pf₁ n-pf₂ (⟿-SAND₂ d₁ x) (⟿-SAND-distl-assoc₁ x₁) = {!!}
+unique-normf {.(SAND _ (OR _ (SAND _ _)))} {.(SAND _ _)} {.(OR (SAND _ _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND₂ d₁ x) (⟿-SAND-distl-assoc₂ x₁) = {!!}
+unique-normf {.(SAND _ (OR (SAND _ _) (SAND _ _)))} {.(SAND _ _)} {.(OR (SAND (SAND _ _) _) (SAND (SAND _ _) _))} n-pf₁ n-pf₂ (⟿-SAND₂ d₁ x) ⟿-SAND-distl-assoc₃ = {!!}
+unique-normf {.(SAND _ (OR _ _))} {.(SAND _ _)} {.(OR (SAND _ _) (SAND _ _))} n-pf₁ n-pf₂ (⟿-SAND₂ d₁ x) (⟿-SAND-distl x₁ x₂) = {!!}
+unique-normf {.(SAND _ _)} {.(SAND _ _)} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND₂ d₁ x) (⟿-SAND₁ d₂) = {!!}
+unique-normf {.(SAND _ _)} {.(SAND _ _)} {.(SAND (SAND _ _) _)} n-pf₁ n-pf₂ (⟿-SAND₂ d₁ x) (⟿-SAND₂-assoc d₂) = {!!}
+unique-normf {.(SAND _ _)} {.(SAND _ _)} {.(SAND _ _)} n-pf₁ n-pf₂ (⟿-SAND₂ d₁ x) (⟿-SAND₂ d₂ x₁) = {!!}
