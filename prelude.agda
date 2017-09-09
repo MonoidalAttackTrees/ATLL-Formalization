@@ -1,6 +1,8 @@
 module prelude where
 
 open import level public
+open import nat public
+open import nat-thms public
 open import product public
 open import product-thms public
 open import sum public
