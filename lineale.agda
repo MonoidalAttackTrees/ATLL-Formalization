@@ -5,6 +5,7 @@ open import empty
 open import unit
 open import eq
 open import functions
+open import product
 
 data Four : Set where
   zero : Four
