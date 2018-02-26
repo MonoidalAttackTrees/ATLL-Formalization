@@ -68,3 +68,41 @@ data _⟶_ : Form → Form → Set where
  cong-⊕ : ∀{P P' Q Q'} → P ⟶ P' → Q ⟶ Q' → P ⊕ Q ⟶ P' ⊕ Q'
  cong-& : ∀{P P' Q Q'} → P ⟶ P' → Q ⟶ Q' → P & Q ⟶ P' & Q'
  
+ex : ∀{a b c d : ℕ} → ((¬ (((atom a) ⊕ (atom d)) ∥ ((atom b) ▷ (atom c)))) ∥ ((atom b) ▷ ((atom d) ∥ (atom c)))) ⟶ I
+ex {a}{b}{c}{d} = trans
+                    {Q =
+                     (¬ (atom d ∥ (atom b ▷ atom c))) ∥ (atom b ▷ (atom d ∥ atom c))}
+                    (cong-∥ (cong-¬ (cong-∥ right refl)) refl)
+                    (trans
+                       {Q =
+                        ((¬ atom d) ⊗ (¬ (atom b ▷ atom c))) ∥
+                        (atom b ▷ (atom d ∥ atom c))}
+                       (cong-∥ dm-∥ refl)
+                       (trans
+                          {Q =
+                           ((¬ atom d) ⊗ ((¬ atom b) ▷ (¬ atom c))) ∥
+                           (atom b ▷ (atom d ∥ atom c))}
+                          (cong-∥ (cong-⊗ refl dm-▷) refl)
+                          (trans
+                             {Q =
+                              (¬ atom d) ⊗
+                              (((¬ atom b) ▷ (¬ atom c)) ∥ (atom b ▷ (atom d ∥ atom c)))}
+                             switch
+                             (trans
+                                {Q =
+                                 (¬ atom d) ⊗
+                                 (((¬ atom b) ∥ atom b) ▷ ((¬ atom c) ∥ (atom d ∥ atom c)))}
+                                (cong-⊗ refl sequence)
+                                (trans {Q = (¬ atom d) ⊗ (I ▷ ((¬ atom c) ∥ (atom d ∥ atom c)))}
+                                (cong-⊗ refl (cong-▷ atomic refl))
+                                (trans {Q = (¬ atom d) ⊗ ((¬ atom c) ∥ (atom d ∥ atom c))}
+                                (cong-⊗ refl unit-▷)
+                                (trans {Q = (¬ atom d) ⊗ ((¬ atom c) ∥ (atom c ∥ atom d))}
+                                (cong-⊗ refl (cong-∥ refl sym-∥))
+                                (trans {Q = (¬ atom d) ⊗ (((¬ atom c) ∥ atom c) ∥ atom d)}
+                                (cong-⊗ refl assoc-inv-∥)
+                                (trans {Q = (¬ atom d) ⊗ (I ∥ atom d)}
+                                (cong-⊗ refl (cong-∥ atomic refl))
+                                (trans {Q = (¬ atom d) ⊗ atom d} (cong-⊗ refl unit-∥)
+                                {!!}))))))))))
+
