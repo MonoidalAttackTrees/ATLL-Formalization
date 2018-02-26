@@ -2178,3 +2178,135 @@ relative-comp {a}{b} = curry₄-inv {a ⊸₄ b}{a}{b} (refl₄ {a ⊸₄ b})
 points : ∀{a b} → a ≤₄ b → I₄ ≤₄ (a ⊸₄ b)
 points {a}{b} p with fst (iso₄-inv (⊗₄-unitr {a}))
 ... | r = curry₄ {I₄} {a} {b} (trans₄ {I₄ ⊗₄ a}{a}{b} r p)
+
+→-curry : ∀{a b c} → (b ▷₄ a) ≤₄ c → b ≤₄ (a →₄ c)
+→-curry {zero} {zero} {zero} h = triv
+→-curry {zero} {zero} {forth} h = triv
+→-curry {zero} {zero} {half} h = triv
+→-curry {zero} {zero} {one} h = triv
+→-curry {zero} {forth} {zero} h = triv
+→-curry {zero} {forth} {forth} h = triv
+→-curry {zero} {forth} {half} h = triv
+→-curry {zero} {forth} {one} h = triv
+→-curry {zero} {half} {zero} h = triv
+→-curry {zero} {half} {forth} h = triv
+→-curry {zero} {half} {half} h = triv
+→-curry {zero} {half} {one} h = triv
+→-curry {zero} {one} {zero} h = triv
+→-curry {zero} {one} {forth} h = triv
+→-curry {zero} {one} {half} h = triv
+→-curry {zero} {one} {one} h = triv
+→-curry {forth} {zero} {zero} h = triv
+→-curry {forth} {zero} {forth} h = triv
+→-curry {forth} {zero} {half} h = triv
+→-curry {forth} {zero} {one} h = triv
+→-curry {forth} {forth} {zero} h = ⊥-elim h
+→-curry {forth} {forth} {forth} h = triv
+→-curry {forth} {forth} {half} h = triv
+→-curry {forth} {forth} {one} h = triv
+→-curry {forth} {half} {zero} h = ⊥-elim h
+→-curry {forth} {half} {forth} h = ⊥-elim h
+→-curry {forth} {half} {half} h = ⊥-elim h
+→-curry {forth} {half} {one} h = triv
+→-curry {forth} {one} {zero} h = ⊥-elim h
+→-curry {forth} {one} {forth} h = ⊥-elim h
+→-curry {forth} {one} {half} h = ⊥-elim h
+→-curry {forth} {one} {one} h = triv
+→-curry {half} {zero} {zero} h = triv
+→-curry {half} {zero} {forth} h = triv
+→-curry {half} {zero} {half} h = triv
+→-curry {half} {zero} {one} h = triv
+→-curry {half} {forth} {zero} h = ⊥-elim h
+→-curry {half} {forth} {forth} h = triv
+→-curry {half} {forth} {half} h = triv
+→-curry {half} {forth} {one} h = triv
+→-curry {half} {half} {zero} h = ⊥-elim h
+→-curry {half} {half} {forth} h = ⊥-elim h
+→-curry {half} {half} {half} h = ⊥-elim h
+→-curry {half} {half} {one} h = triv
+→-curry {half} {one} {zero} h = ⊥-elim h
+→-curry {half} {one} {forth} h = ⊥-elim h
+→-curry {half} {one} {half} h = ⊥-elim h
+→-curry {half} {one} {one} h = triv
+→-curry {one} {zero} {zero} h = triv
+→-curry {one} {zero} {forth} h = triv
+→-curry {one} {zero} {half} h = triv
+→-curry {one} {zero} {one} h = triv
+→-curry {one} {forth} {zero} h = ⊥-elim h
+→-curry {one} {forth} {forth} h = triv
+→-curry {one} {forth} {half} h = triv
+→-curry {one} {forth} {one} h = triv
+→-curry {one} {half} {zero} h = ⊥-elim h
+→-curry {one} {half} {forth} h = ⊥-elim h
+→-curry {one} {half} {half} h = ⊥-elim h
+→-curry {one} {half} {one} h = triv
+→-curry {one} {one} {zero} h = ⊥-elim h
+→-curry {one} {one} {forth} h = ⊥-elim h
+→-curry {one} {one} {half} h = ⊥-elim h
+→-curry {one} {one} {one} h = triv
+
+→-curry-inv : ∀{a b c} → b ≤₄ (a →₄ c) → (b ▷₄ a) ≤₄ c
+→-curry-inv {zero} {zero} {zero} triv = triv
+→-curry-inv {zero} {zero} {forth} triv = triv
+→-curry-inv {zero} {zero} {half} triv = triv
+→-curry-inv {zero} {zero} {one} triv = triv
+→-curry-inv {zero} {forth} {zero} triv = triv
+→-curry-inv {zero} {forth} {forth} triv = triv
+→-curry-inv {zero} {forth} {half} triv = triv
+→-curry-inv {zero} {forth} {one} triv = triv
+→-curry-inv {zero} {half} {zero} triv = triv
+→-curry-inv {zero} {half} {forth} triv = triv
+→-curry-inv {zero} {half} {half} triv = triv
+→-curry-inv {zero} {half} {one} triv = triv
+→-curry-inv {zero} {one} {zero} triv = triv
+→-curry-inv {zero} {one} {forth} triv = triv
+→-curry-inv {zero} {one} {half} triv = triv
+→-curry-inv {zero} {one} {one} triv = triv
+→-curry-inv {forth} {zero} {zero} triv = triv
+→-curry-inv {forth} {zero} {forth} triv = triv
+→-curry-inv {forth} {zero} {half} triv = triv
+→-curry-inv {forth} {zero} {one} triv = triv
+→-curry-inv {forth} {forth} {zero} ()
+→-curry-inv {forth} {forth} {forth} triv = triv
+→-curry-inv {forth} {forth} {half} triv = triv
+→-curry-inv {forth} {forth} {one} triv = triv
+→-curry-inv {forth} {half} {zero} ()
+→-curry-inv {forth} {half} {forth} ()
+→-curry-inv {forth} {half} {half} ()
+→-curry-inv {forth} {half} {one} triv = triv
+→-curry-inv {forth} {one} {zero} ()
+→-curry-inv {forth} {one} {forth} ()
+→-curry-inv {forth} {one} {half} ()
+→-curry-inv {forth} {one} {one} triv = triv
+→-curry-inv {half} {zero} {zero} triv = triv
+→-curry-inv {half} {zero} {forth} triv = triv
+→-curry-inv {half} {zero} {half} triv = triv
+→-curry-inv {half} {zero} {one} triv = triv
+→-curry-inv {half} {forth} {zero} ()
+→-curry-inv {half} {forth} {forth} triv = triv
+→-curry-inv {half} {forth} {half} triv = triv
+→-curry-inv {half} {forth} {one} triv = triv
+→-curry-inv {half} {half} {zero} ()
+→-curry-inv {half} {half} {forth} ()
+→-curry-inv {half} {half} {half} ()
+→-curry-inv {half} {half} {one} triv = triv
+→-curry-inv {half} {one} {zero} ()
+→-curry-inv {half} {one} {forth} ()
+→-curry-inv {half} {one} {half} ()
+→-curry-inv {half} {one} {one} triv = triv
+→-curry-inv {one} {zero} {zero} triv = triv
+→-curry-inv {one} {zero} {forth} triv = triv
+→-curry-inv {one} {zero} {half} triv = triv
+→-curry-inv {one} {zero} {one} triv = triv
+→-curry-inv {one} {forth} {zero} ()
+→-curry-inv {one} {forth} {forth} triv = triv
+→-curry-inv {one} {forth} {half} triv = triv
+→-curry-inv {one} {forth} {one} triv = triv
+→-curry-inv {one} {half} {zero} ()
+→-curry-inv {one} {half} {forth} ()
+→-curry-inv {one} {half} {half} ()
+→-curry-inv {one} {half} {one} triv = triv
+→-curry-inv {one} {one} {zero} ()
+→-curry-inv {one} {one} {forth} ()
+→-curry-inv {one} {one} {half} ()
+→-curry-inv {one} {one} {one} triv = triv

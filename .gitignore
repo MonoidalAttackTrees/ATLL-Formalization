@@ -1,3 +1,9 @@
 *.agdai
 /.#README.md
 /#README.md#
+/NC.trs
+/aprove.jar
+/attack-tree-single-step-unique.agda
+/concon-1.5.0.0.jar
+/muterm
+/muterm-osx.tar.gz
