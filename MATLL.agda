@@ -43,13 +43,12 @@ data _⊨_ : Ctx → Ctx → Set where
   assoc-▷ : ∀{Γ₁ Γ₂ Γ₃} → ((Γ₁ ▷ Γ₂) ▷ Γ₃) ⊨ (Γ₁ ▷ (Γ₂ ▷ Γ₃))
   sym-◼ : ∀{Γ Δ₁ Δ₂} → (Γ ⟨ Δ₁ ◼ Δ₂ ⟩) ⊨ ((Γ ⟨ Δ₂ ◼ Δ₁ ⟩))
   sym-∙ : ∀{Γ Δ₁ Δ₂} → (Γ ⟨ Δ₁ ∙ Δ₂ ⟩) ⊨ ((Γ ⟨ Δ₂ ∙ Δ₁ ⟩))
-  -- Ideal Axioms:
-  -- Filter Axioms:
-  intr₀ : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ▷ Δ₃) ∙ (Δ₂ ▷ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ∙ Δ₂) ▷ (Δ₃ ∙ Δ₄) ⟩)
-  dist₁ : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ◼ Δ₃) ▷ (Δ₂ ◼ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ▷ Δ₂) ◼ (Δ₃ ▷ Δ₄) ⟩)
-  dist₂ : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ▷ Δ₂) ◼ (Δ₃ ▷ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ◼ Δ₃) ▷ (Δ₂ ◼ Δ₄) ⟩)
-  dist₃ : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ◼ Δ₃) ∙ (Δ₂ ◼ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ∙ Δ₂) ◼ (Δ₃ ∙ Δ₄) ⟩)
-  dist₄ : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ∙ Δ₂) ◼ (Δ₃ ∙ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ◼ Δ₃) ∙ (Δ₂ ◼ Δ₄) ⟩)
+
+  i1 : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ▷ Δ₃) ∙ (Δ₂ ▷ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ∙ Δ₂) ▷ (Δ₃ ∙ Δ₄) ⟩)
+  i2 : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ▷ Δ₂) ◼ (Δ₃ ▷ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ◼ Δ₃) ▷ (Δ₂ ◼ Δ₄) ⟩)
+  i2-inv : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ◼ Δ₃) ▷ (Δ₂ ◼ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ▷ Δ₂) ◼ (Δ₃ ▷ Δ₄) ⟩)  
+  i3 : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ∙ Δ₂) ◼ (Δ₃ ∙ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ◼ Δ₃) ∙ (Δ₂ ◼ Δ₄) ⟩)
+  i3-inv : ∀{Γ Δ₁ Δ₂ Δ₃ Δ₄} → (Γ ⟨ (Δ₁ ◼ Δ₃) ∙ (Δ₂ ◼ Δ₄) ⟩) ⊨ (Γ ⟨ (Δ₁ ∙ Δ₂) ◼ (Δ₃ ∙ Δ₄) ⟩)  
   weak : ∀{Γ Δ₁ Δ₂} → ((Γ ⟨ Δ₁ ⟩) ⊨ (Γ ⟨ Δ₁ ◼ Δ₂ ⟩))
   contract : ∀{Γ Δ} → (Γ ⟨ Δ ◼ Δ ⟩) ⊨ (Γ ⟨ Δ ⟩)
 
@@ -92,18 +91,18 @@ sym-⊙ {A}{B} = ⊙e {el (A ⊙ B)} {A} {B} {hole} {B ⊙ A} id (CM {el A ∙ e
 -- Connecting parallel and sequential conjunction (not provable from
 -- the basic system):
 -- 
--- wdist₁ : ∀{A B C}   → (el ((A ⊙ B) ▷ C)) ⊢ (A ⊙ (B ▷ C))
--- wdist₂ : ∀{A B C}   → (el (A ▷ (B ⊙ C))) ⊢ (A ▷ B) ⊙ C)
+-- wi2-inv : ∀{A B C}   → (el ((A ⊙ B) ▷ C)) ⊢ (A ⊙ (B ▷ C))
+-- wi2 : ∀{A B C}   → (el (A ▷ (B ⊙ C))) ⊢ (A ▷ B) ⊙ C)
 -- ▷-⊙    : ∀{A B}     → (el (A ▷ B)) ⊢ (A ⊙ B)
 
 -- Uses weakening:
-dist₁-pf : ∀{A B C} → (el (A ▷ (B ⊔ C))) ⊢ ((A ▷ B) ⊔ (A ▷ C))
-dist₁-pf {A}{B}{C} =
+i2-inv-pf : ∀{A B C} → (el (A ▷ (B ⊔ C))) ⊢ ((A ▷ B) ⊔ (A ▷ C))
+i2-inv-pf {A}{B}{C} =
   ▷e {el (A ▷ (B ⊔ C))} {A} {B ⊔ C} {hole} id
      (⊔e {el (B ⊔ C)} {B} {C} {elH A ▷H hole} id
          (CM {el A ▷ (el B ◼ el C)} {(el A ◼ el A) ▷ (el B ◼ el C)} (weak {hole ▷H (elH B ◼H elH C)})
              (CM {(el A ◼ el A) ▷ (el B ◼ el C)} {(el A ▷ el B) ◼ (el A ▷ el C)}
-                (dist₁ {hole}{el A}{el B}{el A}{el C})
+                (i2-inv {hole}{el A}{el B}{el A}{el C})
                 (⊔i (▷i id id) (▷i id id)))))
 
 dist₅-pf : ∀{A B C} → (el ((A ⊔ B) ▷ C)) ⊢ ((A ▷ C) ⊔ (B ▷ C))
@@ -111,43 +110,43 @@ dist₅-pf {A}{B}{C} = ▷e {el ((A ⊔ B) ▷ C)} {A ⊔ B} {C} {hole} id
   (⊔e {el (A ⊔ B)} {A} {B} {hole ▷H elH C} id
     (CM {(el A ◼ el B) ▷ el C} {(el A ◼ el B) ▷ (el C ◼ el C)} (weak {(elH A ◼H elH B) ▷H hole})
       (CM {(el A ◼ el B) ▷ (el C ◼ el C)} {(el A ▷ el C) ◼ (el B ▷ el C)}
-         (dist₁ {hole}) (⊔i (▷i id id) (▷i id id)))))
+         (i2-inv {hole}) (⊔i (▷i id id) (▷i id id)))))
 
 dist₇-pf : ∀{A B C} → (el ((A ⊔ B) ⊙ C)) ⊢ ((A ⊙ C) ⊔ (B ⊙ C))
 dist₇-pf {A}{B}{C} = ⊙e {el ((A ⊔ B) ⊙ C)} {A ⊔ B} {C} {hole} id
   (⊔e {el (A ⊔ B)} {A} {B} {hole ∙H elH C} id
     (CM {(el A ◼ el B) ∙ el C} {(el A ◼ el B) ∙ (el C ◼ el C)} (weak {(elH A ◼H elH B) ∙H hole})
       (CM {(el A ◼ el B) ∙ (el C ◼ el C)} {(el A ∙ el C) ◼ (el B ∙ el C)}
-         (dist₃ {hole}) (⊔i (⊙i id id) (⊙i id id)))))
+         (i3-inv {hole}) (⊔i (⊙i id id) (⊙i id id)))))
 
-dist₃-pf : ∀{A B C} → (el (A ⊙ (B ⊔ C))) ⊢ ((A ⊙ B) ⊔ (A ⊙ C))
-dist₃-pf {A}{B}{C} =
+i3-inv-pf : ∀{A B C} → (el (A ⊙ (B ⊔ C))) ⊢ ((A ⊙ B) ⊔ (A ⊙ C))
+i3-inv-pf {A}{B}{C} =
   ⊙e {el (A ⊙ (B ⊔ C))} {A} {B ⊔ C} {hole} id
      (⊔e {el (B ⊔ C)} {B} {C} {elH A ∙H hole} id
          (CM {el A ∙ (el B ◼ el C)} {(el A ◼ el A) ∙ (el B ◼ el C)} (weak {hole ∙H (elH B ◼H elH C)})
              (CM {(el A ◼ el A) ∙ (el B ◼ el C)} {(el A ∙ el B) ◼ (el A ∙ el C)}
-                (dist₃ {hole}{el A}{el B}{el A}{el C})
+                (i3-inv {hole}{el A}{el B}{el A}{el C})
                 (⊔i (⊙i id id) (⊙i id id)))))
 
 -- Uses contraction:
-dist₂-pf : ∀{A B C} → (el ((A ▷ B) ⊔ (A ▷ C))) ⊢ (A ▷ (B ⊔ C))
-dist₂-pf {A}{B}{C} =
+i2-pf : ∀{A B C} → (el ((A ▷ B) ⊔ (A ▷ C))) ⊢ (A ▷ (B ⊔ C))
+i2-pf {A}{B}{C} =
   ⊔e {el ((A ▷ B) ⊔ (A ▷ C))} {A ▷ B} {A ▷ C} {hole} id
      (▷e {el (A ▷ B)} {A} {B} {hole ◼H elH (A ▷ C)} id
        (▷e {el (A ▷ C)} {A} {C} {(elH A ▷H elH B) ◼H hole} id
          (CM {(el A ▷ el B) ◼ (el A ▷ el C)} {(el A ◼ el A) ▷ (el B ◼ el C)}
-            (dist₂ {hole}{el A}{el B}{el A}{el C})
+            (i2 {hole}{el A}{el B}{el A}{el C})
             (CM {(el A ◼ el A) ▷ (el B ◼ el C)} {el A ▷ (el B ◼ el C)}
               (contract {hole ▷H ((elH B) ◼H (elH C))}{el A})
               (▷i id (⊔i id id))))))
 
-dist₄-pf : ∀{A B C} → (el ((A ⊙ B) ⊔ (A ⊙ C))) ⊢ (A ⊙ (B ⊔ C))
-dist₄-pf {A}{B}{C} =
+i3-pf : ∀{A B C} → (el ((A ⊙ B) ⊔ (A ⊙ C))) ⊢ (A ⊙ (B ⊔ C))
+i3-pf {A}{B}{C} =
   ⊔e {el ((A ⊙ B) ⊔ (A ⊙ C))} {A ⊙ B} {A ⊙ C} {hole} id
      (⊙e {el (A ⊙ B)} {A} {B} {hole ◼H elH (A ⊙ C)} id
        (⊙e {el (A ⊙ C)} {A} {C} {(elH A ∙H elH B) ◼H hole} id
          (CM {(el A ∙ el B) ◼ (el A ∙ el C)} {(el A ◼ el A) ∙ (el B ◼ el C)}
-            (dist₄ {hole}{el A}{el B}{el A}{el C})
+            (i3 {hole}{el A}{el B}{el A}{el C})
             (CM {(el A ◼ el A) ∙ (el B ◼ el C)} {el A ∙ (el B ◼ el C)}
               (contract {hole ∙H ((elH B) ◼H (elH C))}{el A})
               (⊙i id (⊔i id id))))))
@@ -157,7 +156,7 @@ dist₆-pf {A}{B}{C} = ⊔e {el ((A ▷ C) ⊔ (B ▷ C))} {A ▷ C} {B ▷ C} {
   (▷e {el (A ▷ C)} {A} {C} {hole ◼H elH (B ▷ C)} id
     (▷e {el (B ▷ C)} {B} {C} {(elH A ▷H elH C) ◼H hole} id
       (CM {(el A ▷ el C) ◼ (el B ▷ el C)} {(el A ◼ el B) ▷ (el C ◼ el C)}
-         (dist₂ {hole})
+         (i2 {hole})
          (CM {(el A ◼ el B) ▷ (el C ◼ el C)} {(el A ◼ el B) ▷ el C} (contract {(elH A ◼H elH B) ▷H hole})
            (▷i (⊔i id id) id)))))
 
@@ -166,7 +165,7 @@ dist₈-pf {A}{B}{C} = ⊔e {el ((A ⊙ C) ⊔ (B ⊙ C))} {A ⊙ C} {B ⊙ C} {
   (⊙e {el (A ⊙ C)} {A} {C} {hole ◼H elH (B ⊙ C)} id
     (⊙e {el (B ⊙ C)} {B} {C} {(elH A ∙H elH C) ◼H hole} id
       (CM {(el A ∙ el C) ◼ (el B ∙ el C)} {(el A ◼ el B) ∙ (el C ◼ el C)}
-         (dist₄ {hole})
+         (i3 {hole})
          (CM {(el A ◼ el B) ∙ (el C ◼ el C)} {(el A ◼ el B) ∙ el C} (contract {(elH A ◼H elH B) ∙H hole})
            (⊙i (⊔i id id) id)))))
 
