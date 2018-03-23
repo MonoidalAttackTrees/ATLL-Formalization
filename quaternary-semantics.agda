@@ -62,27 +62,20 @@ _ ⊔₄ forth = forth
 zero ⊔₄ zero = zero
 
 _⊙₄_ : Four → Four → Four
-forth ⊙₄ forth = one
-forth ⊙₄ half = one
-half ⊙₄ forth = one
-half ⊙₄ half = one
-forth ⊙₄ one = one
-one ⊙₄ forth = one
-half ⊙₄ one = one
-one ⊙₄ half = one
-one ⊙₄ one = one
-_ ⊙₄ _ = zero
+zero ⊙₄ _ = zero
+_ ⊙₄ zero = zero
+_ ⊙₄ _ = one
 
 _▷₄_ : Four → Four → Four
-forth ▷₄ half = forth
 half ▷₄ forth = one
-forth ▷₄ forth = forth
-forth ▷₄ one = forth
 half ▷₄ half = one
+half ▷₄ one = one
 one ▷₄ forth = one
 one ▷₄ half = one
-half ▷₄ one = one
 one ▷₄ one = one
+forth ▷₄ half = forth
+forth ▷₄ forth = forth
+forth ▷₄ one = forth
 _ ▷₄ _ = zero
 
 _→₄_ : Four → Four → Four
