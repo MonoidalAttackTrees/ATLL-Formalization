@@ -606,9 +606,9 @@ iso₄-inv {one} {one} p = triv , triv
 ▷₄-sym p with p {forth}{half}
 ... | () 
 
-▷₄-contract : (∀{a} → (a ▷₄ a) ≡ a) → ⊥ {lzero}
-▷₄-contract p with p {half}
-... | () 
+-- ▷₄-contract : (∀{a} → (a ▷₄ a) ≡ a) → ⊥ {lzero}
+-- ▷₄-contract p with p {half}
+-- ... | () 
 
 ▷₄-zerol : ∀{x} → (zero ▷₄ x) ≤₄ zero
 ▷₄-zerol {zero} = triv

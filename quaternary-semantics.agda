@@ -53,30 +53,73 @@ _ ⊸₄ _ = one
 
 
 _⊔₄_ : Four → Four → Four
-one ⊔₄ _ = one
-_ ⊔₄ one = one
-half ⊔₄ _ = half
-_ ⊔₄ half = half
-forth ⊔₄ _ = forth
-_ ⊔₄ forth = forth
-zero ⊔₄ zero = zero
+one   ⊔₄ _     = one
+_     ⊔₄ one   = one
+half  ⊔₄ _     = half
+_     ⊔₄ half  = half
+forth ⊔₄ _     = forth
+_     ⊔₄ forth = forth
+zero  ⊔₄ zero  = zero
+
+_□₄_ : Four → Four → Four
+zero  □₄ zero  = zero
+zero  □₄ forth = zero
+zero  □₄ half  = zero
+zero  □₄ one   = zero
+forth □₄ zero  = zero
+half  □₄ zero  = zero
+one   □₄ zero  = zero
+forth □₄ forth = half
+forth □₄ half  = half
+forth □₄ one   = half
+half  □₄ forth = half
+half  □₄ half  = half
+half  □₄ one   = half
+one   □₄ forth = half
+one   □₄ half  = half
+one   □₄ one   = half
 
 _⊙₄_ : Four → Four → Four
-zero ⊙₄ _ = zero
-_ ⊙₄ zero = zero
-_ ⊙₄ _ = one
+zero  ⊙₄ zero  = zero
+zero  ⊙₄ forth = zero
+zero  ⊙₄ half  = zero
+zero  ⊙₄ one   = zero
+forth ⊙₄ zero  = zero
+half  ⊙₄ zero  = zero
+one   ⊙₄ zero  = zero
+forth ⊙₄ forth = one
+forth ⊙₄ half  = one
+forth ⊙₄ one   = one
+half  ⊙₄ forth = one
+half  ⊙₄ half  = one
+half  ⊙₄ one   = one
+one   ⊙₄ forth = one
+one   ⊙₄ half  = one
+one   ⊙₄ one   = one
 
 _▷₄_ : Four → Four → Four
-half ▷₄ forth = one
-half ▷₄ half = one
-half ▷₄ one = one
-one ▷₄ forth = one
-one ▷₄ half = one
-one ▷₄ one = one
-forth ▷₄ half = forth
+half  ▷₄ forth = one
+half  ▷₄ half  = one
+half  ▷₄ one   = one
+one   ▷₄ forth = one
+one   ▷₄ half  = one
+one   ▷₄ one   = one
+forth ▷₄ half  = forth
 forth ▷₄ forth = forth
-forth ▷₄ one = forth
-_ ▷₄ _ = zero
+forth ▷₄ one   = forth
+_     ▷₄ _     = zero
+
+_◇₄_ : Four → Four → Four
+half  ◇₄ forth = half
+half  ◇₄ half  = half
+half  ◇₄ one   = half
+one   ◇₄ forth = half
+one   ◇₄ half  = half
+one   ◇₄ one   = half
+forth ◇₄ half  = forth
+forth ◇₄ forth = forth
+forth ◇₄ one   = forth
+_     ◇₄ _     = zero
 
 _→₄_ : Four → Four → Four
 zero →₄ zero = one
