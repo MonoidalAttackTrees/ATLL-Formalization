@@ -1617,6 +1617,10 @@ ax₁-inv {one} {one} {one} {forth} = triv
 ax₁-inv {one} {one} {one} {half} = triv
 ax₁-inv {one} {one} {one} {one} = triv
 
+-- Counter example:
+-- ax₁ : ∀{a b c d} → (a ▷I c) ⊙I (b ▷I d) ≤₄ (a ⊙I b) ▷I (c ⊙I d)
+-- ax₁ {forth} {forth} {forth} {forth} = triv
+
 -- Ideal
 ax₂-inv : ∀{a b c} → (a ⊙I b) ▷I c ≤₄ a ⊙I (b ▷I c)
 ax₂-inv {zero} {zero} {zero} = triv
@@ -1684,6 +1688,10 @@ ax₂-inv {one} {one} {forth} = triv
 ax₂-inv {one} {one} {half} = triv
 ax₂-inv {one} {one} {one} = triv
 
+-- Counter example:
+-- ax₂ : ∀{a b c} → a ⊙I (b ▷I c) ≤₄ (a ⊙I b) ▷I c
+-- ax₂ {forth} {forth} {forth} = triv
+
 -- Ideal
 ax₃-inv : ∀{a b c} → a ▷I (b ⊙I c) ≤₄ b ⊙I (a ▷I c)
 ax₃-inv {zero} {zero} {zero} = triv
@@ -1750,6 +1758,10 @@ ax₃-inv {one} {one} {zero} = triv
 ax₃-inv {one} {one} {forth} = triv
 ax₃-inv {one} {one} {half} = triv
 ax₃-inv {one} {one} {one} = triv
+
+-- Counter example:
+-- ax₃ : ∀{a b c} → b ⊙I (a ▷I c) ≤₄ a ▷I (b ⊙I c)
+-- ax₃ {forth} {forth} {forth} = triv
 
 -- Ideal
 ax₄-inv : ∀{a b} → a ▷I b ≤₄ a ⊙I b
