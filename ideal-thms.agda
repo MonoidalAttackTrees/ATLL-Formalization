@@ -1356,6 +1356,73 @@ open import ideal-semantics
 ⊔I-inr {one} {half} = triv
 ⊔I-inr {one} {one} = triv
 
+⊔I-um : ∀{a b c} → a ≤₄ c → b ≤₄ c → a ⊔I b ≤₄ c
+⊔I-um {zero} {zero} {zero} triv triv = triv
+⊔I-um {zero} {zero} {forth} triv triv = triv
+⊔I-um {zero} {zero} {half} triv triv = triv
+⊔I-um {zero} {zero} {one} triv triv = triv
+⊔I-um {zero} {forth} {zero} triv ()
+⊔I-um {zero} {forth} {forth} triv triv = triv
+⊔I-um {zero} {forth} {half} triv triv = triv
+⊔I-um {zero} {forth} {one} triv triv = triv
+⊔I-um {zero} {half} {zero} triv ()
+⊔I-um {zero} {half} {forth} triv ()
+⊔I-um {zero} {half} {half} triv triv = triv
+⊔I-um {zero} {half} {one} triv triv = triv
+⊔I-um {zero} {one} {zero} triv ()
+⊔I-um {zero} {one} {forth} triv ()
+⊔I-um {zero} {one} {half} triv ()
+⊔I-um {zero} {one} {one} triv triv = triv
+⊔I-um {forth} {zero} {zero} () p2
+⊔I-um {forth} {zero} {forth} triv triv = triv
+⊔I-um {forth} {zero} {half} triv triv = triv
+⊔I-um {forth} {zero} {one} triv triv = triv
+⊔I-um {forth} {forth} {zero} () p2
+⊔I-um {forth} {forth} {forth} triv triv = triv
+⊔I-um {forth} {forth} {half} triv triv = triv
+⊔I-um {forth} {forth} {one} triv triv = triv
+⊔I-um {forth} {half} {zero} () p2
+⊔I-um {forth} {half} {forth} triv ()
+⊔I-um {forth} {half} {half} triv triv = triv
+⊔I-um {forth} {half} {one} triv triv = triv
+⊔I-um {forth} {one} {zero} () p2
+⊔I-um {forth} {one} {forth} triv ()
+⊔I-um {forth} {one} {half} triv ()
+⊔I-um {forth} {one} {one} triv triv = triv
+⊔I-um {half} {zero} {zero} () p2
+⊔I-um {half} {zero} {forth} () p2
+⊔I-um {half} {zero} {half} triv triv = triv
+⊔I-um {half} {zero} {one} triv triv = triv
+⊔I-um {half} {forth} {zero} () p2
+⊔I-um {half} {forth} {forth} () p2
+⊔I-um {half} {forth} {half} triv triv = triv
+⊔I-um {half} {forth} {one} triv triv = triv
+⊔I-um {half} {half} {zero} () p2
+⊔I-um {half} {half} {forth} () p2
+⊔I-um {half} {half} {half} triv triv = triv
+⊔I-um {half} {half} {one} triv triv = triv
+⊔I-um {half} {one} {zero} () p2
+⊔I-um {half} {one} {forth} () p2
+⊔I-um {half} {one} {half} triv ()
+⊔I-um {half} {one} {one} triv triv = triv
+⊔I-um {one} {zero} {zero} () p2
+⊔I-um {one} {zero} {forth} () p2
+⊔I-um {one} {zero} {half} () p2
+⊔I-um {one} {zero} {one} triv triv = triv
+⊔I-um {one} {forth} {zero} () p2
+⊔I-um {one} {forth} {forth} () p2
+⊔I-um {one} {forth} {half} () p2
+⊔I-um {one} {forth} {one} triv triv = triv
+⊔I-um {one} {half} {zero} () p2
+⊔I-um {one} {half} {forth} () p2
+⊔I-um {one} {half} {half} () p2
+⊔I-um {one} {half} {one} triv triv = triv
+⊔I-um {one} {one} {zero} () p2
+⊔I-um {one} {one} {forth} () p2
+⊔I-um {one} {one} {half} () p2
+⊔I-um {one} {one} {one} triv triv = triv
+
+
 -- Exchange Implications (Fig. 9, top of p. 18):
 
 -- Ideal
